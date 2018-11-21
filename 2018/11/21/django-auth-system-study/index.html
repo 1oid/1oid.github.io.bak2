@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="创建superuserpython manage.py createsuperuser --username=joe --email=joe@example.com 修改密码1234&amp;gt;&amp;gt;&amp;gt; from django.contrib.auth.models import User&amp;gt;&amp;gt;&amp;gt; u = User.objects.get(username=&apos;john&apos;)&amp;gt">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Django认证系统学习笔记">
+<meta property="og:url" content="https://1oid.github.io/2018/11/21/django-auth-system-study/index.html">
+<meta property="og:site_name" content="Loid&#39;s Blog">
+<meta property="og:description" content="创建superuserpython manage.py createsuperuser --username=joe --email=joe@example.com 修改密码1234&amp;gt;&amp;gt;&amp;gt; from django.contrib.auth.models import User&amp;gt;&amp;gt;&amp;gt; u = User.objects.get(username=&apos;john&apos;)&amp;gt">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-11-21T08:38:42.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Django认证系统学习笔记">
+<meta name="twitter:description" content="创建superuserpython manage.py createsuperuser --username=joe --email=joe@example.com 修改密码1234&amp;gt;&amp;gt;&amp;gt; from django.contrib.auth.models import User&amp;gt;&amp;gt;&amp;gt; u = User.objects.get(username=&apos;john&apos;)&amp;gt">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>Django认证系统学习笔记</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+         
+          <li><a href="/link/">FriendLink</a></li>
+        
+      </ul>
+    </span>
+    <br>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://1oid.github.io/2018/11/21/django-auth-system-study/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://1oid.github.io/2018/11/21/django-auth-system-study/&text=Django认证系统学习笔记"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://1oid.github.io/2018/11/21/django-auth-system-study/&title=Django认证系统学习笔记"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://1oid.github.io/2018/11/21/django-auth-system-study/&is_video=false&description=Django认证系统学习笔记"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Django认证系统学习笔记&body=Check out this article: https://1oid.github.io/2018/11/21/django-auth-system-study/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://1oid.github.io/2018/11/21/django-auth-system-study/&title=Django认证系统学习笔记"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://1oid.github.io/2018/11/21/django-auth-system-study/&title=Django认证系统学习笔记"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://1oid.github.io/2018/11/21/django-auth-system-study/&title=Django认证系统学习笔记"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://1oid.github.io/2018/11/21/django-auth-system-study/&title=Django认证系统学习笔记"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://1oid.github.io/2018/11/21/django-auth-system-study/&name=Django认证系统学习笔记&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#创建superuser"><span class="toc-number">1.</span> <span class="toc-text">创建superuser</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修改密码"><span class="toc-number">2.</span> <span class="toc-text">修改密码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#认证Users-authenticate"><span class="toc-number">3.</span> <span class="toc-text">认证Users(authenticate)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Web请求中的认证"><span class="toc-number">4.</span> <span class="toc-text">Web请求中的认证</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#用户的登入与登出"><span class="toc-number">5.</span> <span class="toc-text">用户的登入与登出</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#登出"><span class="toc-number">6.</span> <span class="toc-text">登出</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#只允许登入用户访问"><span class="toc-number">7.</span> <span class="toc-text">只允许登入用户访问</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#给已验证的用户添加访问限制-只允许特定用户访问某些特定页面"><span class="toc-number">8.</span> <span class="toc-text">给已验证的用户添加访问限制 (只允许特定用户访问某些特定页面)</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope="" itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Django认证系统学习笔记
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+        <span itemprop="name">Loid's Blog</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2018-11-21T06:13:11.000Z" itemprop="datePublished">2018-11-21</time>
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="创建superuser"><a href="#创建superuser" class="headerlink" title="创建superuser"></a>创建superuser</h2><p><code>python manage.py createsuperuser --username=joe --email=joe@example.com</code></p>
+<h2 id="修改密码"><a href="#修改密码" class="headerlink" title="修改密码"></a>修改密码</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">from</span> django.contrib.auth.models <span class="keyword">import</span> User</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>u = User.objects.get(username=<span class="string">'john'</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>u.set_password(<span class="string">'new password'</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>u.save()</span><br></pre></td></tr></table></figure>
+<h2 id="认证Users-authenticate"><a href="#认证Users-authenticate" class="headerlink" title="认证Users(authenticate)"></a>认证Users(authenticate)</h2><blockquote>
+<p>使用默认配置时的参数是username 和 password, 如果密码能够匹配给定的用户名,他就返回一个User对象. 如果密码无效,那么authenticate 就返回None.</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">username, password = request.POST[<span class="string">'username'</span>], request.POST[<span class="string">'password'</span>]</span><br><span class="line">user = authenticate(username=username, password=password)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 判断账号密码是否匹配</span></span><br><span class="line"><span class="keyword">if</span> user <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">None</span>:</span><br><span class="line"></span><br><span class="line">    <span class="comment">#判断用户是否被激活</span></span><br><span class="line">        <span class="keyword">if</span> user.is_active:</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 登录user</span></span><br><span class="line">            login(request, user)</span><br><span class="line">            <span class="keyword">return</span> render(request, <span class="string">"index.html"</span>, &#123;<span class="string">"Auth"</span>: request.user&#125;)</span><br><span class="line">        <span class="keyword">return</span> HttpResponse(<span class="string">"User not active!Concat the website administrator!"</span>)</span><br><span class="line"><span class="keyword">return</span> HttpResponse(<span class="string">"Not Current User!"</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="Web请求中的认证"><a href="#Web请求中的认证" class="headerlink" title="Web请求中的认证"></a>Web请求中的认证</h2><blockquote>
+<p>djang在请求(request)上, 提供一个request.user属性,表示当前用户,如果用户没有登入,<br>该属性将设置成匿名用户(AnonymousUser)的一个实例, 可以用is_authenticated()来判断是否登入.</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> request.user.is_authenticated():</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> render(request, <span class="string">"index.html"</span>, &#123;<span class="string">"Auth"</span>: request.user&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> render(request, <span class="string">"login.html"</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="用户的登入与登出"><a href="#用户的登入与登出" class="headerlink" title="用户的登入与登出"></a>用户的登入与登出</h2><blockquote>
+<p>login(HttpResponse对象, User对象) 与 logout(HttpResponse对象, User对象)</p>
+</blockquote>
+<p><code>from django.contrib.auth import login, logout</code></p>
+<p>登入<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">user = authenticate(username=username, password=password)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> user <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">None</span>:</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> user.is_active:</span><br><span class="line">        login(request,user)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        ......</span><br><span class="line"><span class="keyword">else</span>: </span><br><span class="line">    ...</span><br></pre></td></tr></table></figure></p>
+<h2 id="登出"><a href="#登出" class="headerlink" title="登出"></a>登出</h2><p><code>logout(request)</code></p>
+<h2 id="只允许登入用户访问"><a href="#只允许登入用户访问" class="headerlink" title="只允许登入用户访问"></a>只允许登入用户访问</h2><p><code>login_required 装饰器</code></p>
+<blockquote>
+<p>此处用Decorating the class 装饰类, 此处不直接用login_required() 函数装饰器</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.contrib.auth.decorators <span class="keyword">import</span> login_required</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> django.utils.decorators <span class="keyword">import</span> method_decorator</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserLook</span><span class="params">(View)</span>:</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">    @method_decorator(login_required(login_url='/'))</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get</span><span class="params">(self, request)</span>:</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> render(request, <span class="string">'login.html'</span>, )</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>如果此处没有对login_url 进行定义, 那就需要确保settings.LOGIN_URL与你的登录视图正确关联, 例如,使用默认值,可以添加下面几行到你的URLconf种:</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.contrib.auth <span class="keyword">import</span> views <span class="keyword">as</span> auth_views</span><br><span class="line">url(<span class="string">r'^accounts/login/$'</span>, auth_views.login),</span><br></pre></td></tr></table></figure>
+<h2 id="给已验证的用户添加访问限制-只允许特定用户访问某些特定页面"><a href="#给已验证的用户添加访问限制-只允许特定用户访问某些特定页面" class="headerlink" title="给已验证的用户添加访问限制 (只允许特定用户访问某些特定页面)"></a>给已验证的用户添加访问限制 (只允许特定用户访问某些特定页面)</h2><p><code>request.user.email.endswith(&#39;@example.com&#39;) 返回True/False</code><br>或者使用 <code>user_pass_test(func[,login_url=None,....])</code><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.contrib.auth.decorators <span class="keyword">import</span> user_passes_test</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">email_check</span><span class="params">(user)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> user.email.endswith(<span class="string">'@example.com'</span>)</span><br><span class="line"></span><br><span class="line"><span class="meta">@user_passes_test(email_check)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">my_view</span><span class="params">(request)</span>:</span></span><br><span class="line">    ...</span><br></pre></td></tr></table></figure></p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+         
+          <li><a href="/link/">FriendLink</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#创建superuser"><span class="toc-number">1.</span> <span class="toc-text">创建superuser</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修改密码"><span class="toc-number">2.</span> <span class="toc-text">修改密码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#认证Users-authenticate"><span class="toc-number">3.</span> <span class="toc-text">认证Users(authenticate)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Web请求中的认证"><span class="toc-number">4.</span> <span class="toc-text">Web请求中的认证</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#用户的登入与登出"><span class="toc-number">5.</span> <span class="toc-text">用户的登入与登出</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#登出"><span class="toc-number">6.</span> <span class="toc-text">登出</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#只允许登入用户访问"><span class="toc-number">7.</span> <span class="toc-text">只允许登入用户访问</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#给已验证的用户添加访问限制-只允许特定用户访问某些特定页面"><span class="toc-number">8.</span> <span class="toc-text">给已验证的用户添加访问限制 (只允许特定用户访问某些特定页面)</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://1oid.github.io/2018/11/21/django-auth-system-study/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://1oid.github.io/2018/11/21/django-auth-system-study/&text=Django认证系统学习笔记"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://1oid.github.io/2018/11/21/django-auth-system-study/&title=Django认证系统学习笔记"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://1oid.github.io/2018/11/21/django-auth-system-study/&is_video=false&description=Django认证系统学习笔记"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Django认证系统学习笔记&body=Check out this article: https://1oid.github.io/2018/11/21/django-auth-system-study/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://1oid.github.io/2018/11/21/django-auth-system-study/&title=Django认证系统学习笔记"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://1oid.github.io/2018/11/21/django-auth-system-study/&title=Django认证系统学习笔记"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://1oid.github.io/2018/11/21/django-auth-system-study/&title=Django认证系统学习笔记"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://1oid.github.io/2018/11/21/django-auth-system-study/&title=Django认证系统学习笔记"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://1oid.github.io/2018/11/21/django-auth-system-study/&name=Django认证系统学习笔记&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2018 Loid
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+         
+          <li><a href="/link/">FriendLink</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
