@@ -6,17 +6,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="原文link https://www.t00ls.net/viewthread.php?tid=45590&amp;amp;from=favorites此篇文章中只讲述了and/or的工作机制, where的机制并没有讲.感觉挺有意思的,故无聊的时候用此方法实现了模仿limit效果此处只补充部分知识,tony师傅的文章里补充的更详细  环境准备 MySQL 8 表xsql中有一个id和usename|i">
+    <meta name="description" content="原文link https://www.t00ls.net/viewthread.php?tid=45590&amp;amp;from=favorites此篇文章中只讲述了and/or的工作机制, where的机制并没有讲.感觉挺有意思的,故无聊的时候用此方法实现了模仿limit效果此处只补充部分知识,tony师傅的文章里补充的更详细  环境准备 MySQL 8 表xsql中有一个id和usename">
 <meta property="og:type" content="article">
 <meta property="og:title" content="利用MySQL中where的特性模仿limit 0,n实现">
 <meta property="og:url" content="https://1oid.github.io/2019/01/05/mysql-limit-imitate/index.html">
 <meta property="og:site_name" content="Loid&#39;s Blog">
-<meta property="og:description" content="原文link https://www.t00ls.net/viewthread.php?tid=45590&amp;amp;from=favorites此篇文章中只讲述了and/or的工作机制, where的机制并没有讲.感觉挺有意思的,故无聊的时候用此方法实现了模仿limit效果此处只补充部分知识,tony师傅的文章里补充的更详细  环境准备 MySQL 8 表xsql中有一个id和usename|i">
+<meta property="og:description" content="原文link https://www.t00ls.net/viewthread.php?tid=45590&amp;amp;from=favorites此篇文章中只讲述了and/or的工作机制, where的机制并没有讲.感觉挺有意思的,故无聊的时候用此方法实现了模仿limit效果此处只补充部分知识,tony师傅的文章里补充的更详细  环境准备 MySQL 8 表xsql中有一个id和usename">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-01-05T13:59:30.000Z">
+<meta property="og:updated_time" content="2019-01-05T14:05:28.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="利用MySQL中where的特性模仿limit 0,n实现">
-<meta name="twitter:description" content="原文link https://www.t00ls.net/viewthread.php?tid=45590&amp;amp;from=favorites此篇文章中只讲述了and/or的工作机制, where的机制并没有讲.感觉挺有意思的,故无聊的时候用此方法实现了模仿limit效果此处只补充部分知识,tony师傅的文章里补充的更详细  环境准备 MySQL 8 表xsql中有一个id和usename|i">
+<meta name="twitter:description" content="原文link https://www.t00ls.net/viewthread.php?tid=45590&amp;amp;from=favorites此篇文章中只讲述了and/or的工作机制, where的机制并没有讲.感觉挺有意思的,故无聊的时候用此方法实现了模仿limit效果此处只补充部分知识,tony师傅的文章里补充的更详细  环境准备 MySQL 8 表xsql中有一个id和usename">
     
     
         
@@ -143,8 +143,30 @@
 </blockquote>
 <h3 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h3><ul>
 <li>MySQL 8</li>
-<li>表<code>xsql</code>中有一个<code>id</code>和<code>usename</code><br>|id|username|<br>|–|————|<br>|1|loid|<br>|2|admin|<br>|3|pas|</li>
+<li>表<code>xsql</code>中有一个<code>id</code>和<code>usename</code></li>
 </ul>
+<table>
+<thead>
+<tr>
+<th>id</th>
+<th>username</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>loid</td>
+</tr>
+<tr>
+<td>2</td>
+<td>admin</td>
+</tr>
+<tr>
+<td>3</td>
+<td>pas</td>
+</tr>
+</tbody>
+</table>
 <h3 id="and-or的惰性计算"><a href="#and-or的惰性计算" class="headerlink" title="and/or的惰性计算"></a>and/or的惰性计算</h3><ul>
 <li>A and B, 如果 A 为真,那么继续判断B是否为真. 但是如果A为假就不再执行B表达式</li>
 <li>A or B, 如果 A 为假,那么就继续判断B是否为真, 但是如果A为真,就不再执行B表达式</li>
