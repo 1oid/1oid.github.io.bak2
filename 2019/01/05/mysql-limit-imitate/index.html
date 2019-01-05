@@ -8,14 +8,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="description" content="原文link https://www.t00ls.net/viewthread.php?tid=45590&amp;amp;from=favorites此篇文章中只讲述了and/or的工作机制, where的机制并没有讲.感觉挺有意思的,故无聊的时候用此方法实现了模仿limit效果此处只补充部分知识,tony师傅的文章里补充的更详细  环境准备 MySQL 8 表xsql中有一个id和usename|i">
 <meta property="og:type" content="article">
-<meta property="og:title" content="mysql limit imitate">
+<meta property="og:title" content="利用MySQL中where的特性模仿limit 0,n实现">
 <meta property="og:url" content="https://1oid.github.io/2019/01/05/mysql-limit-imitate/index.html">
 <meta property="og:site_name" content="Loid&#39;s Blog">
 <meta property="og:description" content="原文link https://www.t00ls.net/viewthread.php?tid=45590&amp;amp;from=favorites此篇文章中只讲述了and/or的工作机制, where的机制并没有讲.感觉挺有意思的,故无聊的时候用此方法实现了模仿limit效果此处只补充部分知识,tony师傅的文章里补充的更详细  环境准备 MySQL 8 表xsql中有一个id和usename|i">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-01-05T13:58:01.000Z">
+<meta property="og:updated_time" content="2019-01-05T13:59:30.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="mysql limit imitate">
+<meta name="twitter:title" content="利用MySQL中where的特性模仿limit 0,n实现">
 <meta name="twitter:description" content="原文link https://www.t00ls.net/viewthread.php?tid=45590&amp;amp;from=favorites此篇文章中只讲述了and/or的工作机制, where的机制并没有讲.感觉挺有意思的,故无聊的时候用此方法实现了模仿limit效果此处只补充部分知识,tony师傅的文章里补充的更详细  环境准备 MySQL 8 表xsql中有一个id和usename|i">
     
     
@@ -36,7 +36,7 @@
         
     
     <!-- title -->
-    <title>mysql limit imitate</title>
+    <title>利用MySQL中where的特性模仿limit 0,n实现</title>
     <!-- styles -->
     <link rel="stylesheet" href="/css/style.css">
     <!-- persian styles -->
@@ -89,15 +89,15 @@
     <div id="share" style="display: none">
       <ul>
   <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://1oid.github.io/2019/01/05/mysql-limit-imitate/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://1oid.github.io/2019/01/05/mysql-limit-imitate/&text=mysql limit imitate"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://1oid.github.io/2019/01/05/mysql-limit-imitate/&title=mysql limit imitate"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://1oid.github.io/2019/01/05/mysql-limit-imitate/&is_video=false&description=mysql limit imitate"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=mysql limit imitate&body=Check out this article: https://1oid.github.io/2019/01/05/mysql-limit-imitate/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://1oid.github.io/2019/01/05/mysql-limit-imitate/&title=mysql limit imitate"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://1oid.github.io/2019/01/05/mysql-limit-imitate/&title=mysql limit imitate"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://1oid.github.io/2019/01/05/mysql-limit-imitate/&title=mysql limit imitate"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://1oid.github.io/2019/01/05/mysql-limit-imitate/&title=mysql limit imitate"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://1oid.github.io/2019/01/05/mysql-limit-imitate/&name=mysql limit imitate&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://1oid.github.io/2019/01/05/mysql-limit-imitate/&text=利用MySQL中where的特性模仿limit 0,n实现"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://1oid.github.io/2019/01/05/mysql-limit-imitate/&title=利用MySQL中where的特性模仿limit 0,n实现"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://1oid.github.io/2019/01/05/mysql-limit-imitate/&is_video=false&description=利用MySQL中where的特性模仿limit 0,n实现"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=利用MySQL中where的特性模仿limit 0,n实现&body=Check out this article: https://1oid.github.io/2019/01/05/mysql-limit-imitate/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://1oid.github.io/2019/01/05/mysql-limit-imitate/&title=利用MySQL中where的特性模仿limit 0,n实现"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://1oid.github.io/2019/01/05/mysql-limit-imitate/&title=利用MySQL中where的特性模仿limit 0,n实现"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://1oid.github.io/2019/01/05/mysql-limit-imitate/&title=利用MySQL中where的特性模仿limit 0,n实现"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://1oid.github.io/2019/01/05/mysql-limit-imitate/&title=利用MySQL中where的特性模仿limit 0,n实现"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://1oid.github.io/2019/01/05/mysql-limit-imitate/&name=利用MySQL中where的特性模仿limit 0,n实现&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -114,7 +114,7 @@
   <header>
     
     <h1 class="posttitle" itemprop="name headline">
-        mysql limit imitate
+        利用MySQL中where的特性模仿limit 0,n实现
     </h1>
 
 
@@ -199,15 +199,15 @@
     <div id="share-footer" style="display: none">
       <ul>
   <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://1oid.github.io/2019/01/05/mysql-limit-imitate/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://1oid.github.io/2019/01/05/mysql-limit-imitate/&text=mysql limit imitate"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://1oid.github.io/2019/01/05/mysql-limit-imitate/&title=mysql limit imitate"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://1oid.github.io/2019/01/05/mysql-limit-imitate/&is_video=false&description=mysql limit imitate"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=mysql limit imitate&body=Check out this article: https://1oid.github.io/2019/01/05/mysql-limit-imitate/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://1oid.github.io/2019/01/05/mysql-limit-imitate/&title=mysql limit imitate"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://1oid.github.io/2019/01/05/mysql-limit-imitate/&title=mysql limit imitate"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://1oid.github.io/2019/01/05/mysql-limit-imitate/&title=mysql limit imitate"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://1oid.github.io/2019/01/05/mysql-limit-imitate/&title=mysql limit imitate"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://1oid.github.io/2019/01/05/mysql-limit-imitate/&name=mysql limit imitate&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://1oid.github.io/2019/01/05/mysql-limit-imitate/&text=利用MySQL中where的特性模仿limit 0,n实现"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://1oid.github.io/2019/01/05/mysql-limit-imitate/&title=利用MySQL中where的特性模仿limit 0,n实现"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://1oid.github.io/2019/01/05/mysql-limit-imitate/&is_video=false&description=利用MySQL中where的特性模仿limit 0,n实现"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=利用MySQL中where的特性模仿limit 0,n实现&body=Check out this article: https://1oid.github.io/2019/01/05/mysql-limit-imitate/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://1oid.github.io/2019/01/05/mysql-limit-imitate/&title=利用MySQL中where的特性模仿limit 0,n实现"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://1oid.github.io/2019/01/05/mysql-limit-imitate/&title=利用MySQL中where的特性模仿limit 0,n实现"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://1oid.github.io/2019/01/05/mysql-limit-imitate/&title=利用MySQL中where的特性模仿limit 0,n实现"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://1oid.github.io/2019/01/05/mysql-limit-imitate/&title=利用MySQL中where的特性模仿limit 0,n实现"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://1oid.github.io/2019/01/05/mysql-limit-imitate/&name=利用MySQL中where的特性模仿limit 0,n实现&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
