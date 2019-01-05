@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="原文link https://www.t00ls.net/viewthread.php?tid=45590&amp;amp;from=favorites此篇文章中只讲述了and/or的工作机制, where的机制并没有讲.感觉挺有意思的,故无聊的时候用此方法实现了模仿limit效果此处只补充部分知识,tony师傅的文章里补充的更详细  环境准备 MySQL 8 表xsql中有一个id和usename|i">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mysql limit imitate">
+<meta property="og:url" content="https://1oid.github.io/2019/01/05/mysql-limit-imitate/index.html">
+<meta property="og:site_name" content="Loid&#39;s Blog">
+<meta property="og:description" content="原文link https://www.t00ls.net/viewthread.php?tid=45590&amp;amp;from=favorites此篇文章中只讲述了and/or的工作机制, where的机制并没有讲.感觉挺有意思的,故无聊的时候用此方法实现了模仿limit效果此处只补充部分知识,tony师傅的文章里补充的更详细  环境准备 MySQL 8 表xsql中有一个id和usename|i">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-01-05T13:58:01.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="mysql limit imitate">
+<meta name="twitter:description" content="原文link https://www.t00ls.net/viewthread.php?tid=45590&amp;amp;from=favorites此篇文章中只讲述了and/or的工作机制, where的机制并没有讲.感觉挺有意思的,故无聊的时候用此方法实现了模仿limit效果此处只补充部分知识,tony师傅的文章里补充的更详细  环境准备 MySQL 8 表xsql中有一个id和usename|i">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>mysql limit imitate</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+         
+          <li><a href="/link/">FriendLink</a></li>
+        
+      </ul>
+    </span>
+    <br>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/2018/12/14/metasploit-post-penetration/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://1oid.github.io/2019/01/05/mysql-limit-imitate/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://1oid.github.io/2019/01/05/mysql-limit-imitate/&text=mysql limit imitate"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://1oid.github.io/2019/01/05/mysql-limit-imitate/&title=mysql limit imitate"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://1oid.github.io/2019/01/05/mysql-limit-imitate/&is_video=false&description=mysql limit imitate"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=mysql limit imitate&body=Check out this article: https://1oid.github.io/2019/01/05/mysql-limit-imitate/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://1oid.github.io/2019/01/05/mysql-limit-imitate/&title=mysql limit imitate"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://1oid.github.io/2019/01/05/mysql-limit-imitate/&title=mysql limit imitate"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://1oid.github.io/2019/01/05/mysql-limit-imitate/&title=mysql limit imitate"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://1oid.github.io/2019/01/05/mysql-limit-imitate/&title=mysql limit imitate"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://1oid.github.io/2019/01/05/mysql-limit-imitate/&name=mysql limit imitate&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#环境准备"><span class="toc-number">1.</span> <span class="toc-text">环境准备</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#and-or的惰性计算"><span class="toc-number">2.</span> <span class="toc-text">and/or的惰性计算</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#where在使用的时候的特性"><span class="toc-number">3.</span> <span class="toc-text">where在使用的时候的特性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实现limit-0-n效果的sql代码"><span class="toc-number">4.</span> <span class="toc-text">实现limit 0,n效果的sql代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#写在最后"><span class="toc-number">5.</span> <span class="toc-text">写在最后</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope="" itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        mysql limit imitate
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+        <span itemprop="name">Loid's Blog</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2019-01-05T13:57:45.000Z" itemprop="datePublished">2019-01-05</time>
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <blockquote>
+<p><a href="https://www.t00ls.net/viewthread.php?tid=45590&amp;from=favorites" target="_blank" rel="noopener">原文link https://www.t00ls.net/viewthread.php?tid=45590&amp;from=favorites</a><br>此篇文章中只讲述了and/or的工作机制, where的机制并没有讲.<br>感觉挺有意思的,故无聊的时候用此方法实现了模仿limit效果<br>此处只补充部分知识,tony师傅的文章里补充的更详细</p>
+</blockquote>
+<h3 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h3><ul>
+<li>MySQL 8</li>
+<li>表<code>xsql</code>中有一个<code>id</code>和<code>usename</code><br>|id|username|<br>|–|————|<br>|1|loid|<br>|2|admin|<br>|3|pas|</li>
+</ul>
+<h3 id="and-or的惰性计算"><a href="#and-or的惰性计算" class="headerlink" title="and/or的惰性计算"></a>and/or的惰性计算</h3><ul>
+<li>A and B, 如果 A 为真,那么继续判断B是否为真. 但是如果A为假就不再执行B表达式</li>
+<li>A or B, 如果 A 为假,那么就继续判断B是否为真, 但是如果A为真,就不再执行B表达式</li>
+</ul>
+<h3 id="where在使用的时候的特性"><a href="#where在使用的时候的特性" class="headerlink" title="where在使用的时候的特性"></a>where在使用的时候的特性</h3><ul>
+<li><p>语句 <code>select * from xsql where username=&#39;11&#39; or sleep(1)</code><br>此处在执行<code>where</code>的时候, 会对<code>每行</code>数据进行验证.过程如下: </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">判断`id`为1的数据, `username`是否为&apos;11&apos; 或者 延时一秒 //为假, 因为username 不为`11`, sleep(1)返回的也是0</span><br><span class="line">判断`id`为2的数据, `username`是否为&apos;11&apos; 或者 延时一秒 //同上</span><br><span class="line">判断`id`为3的数据, `username`是否为&apos;11&apos; 或者 延时一秒 //同上</span><br><span class="line">因为这里是`or`根据or表达式的惰性计算原理, </span><br><span class="line">后面的`sleep(1)` 会被执行3此,此时总共耗费3秒时间</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>语句 <code>select * from xsql where username=&#39;loid&#39; or sleep(1)</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">id=1行判断, username = &apos;loid&apos;为真,所以不执行 sleep(1)</span><br><span class="line">id=2行判断, username = &apos;loid&apos;为假,执行sleep(1)</span><br><span class="line">id=3行判断, username = &apos;loid&apos;为假,执行sleep(1)</span><br><span class="line">结果返回id=1, username=&apos;loid&apos;行,并耗时2秒</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>select * from xsql where id&gt;1 and sleep(1)</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">id=1行判断, id&gt;1为假,所以不执行sleep(1)        // and的惰性运算</span><br><span class="line">id=2行判断, id&gt;2为真,执行sleep(1)</span><br><span class="line">id=3行判断, id&gt;3为真,执行sleep(1)</span><br><span class="line">结果返回id=2与id=3的行,并且延时2秒</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="实现limit-0-n效果的sql代码"><a href="#实现limit-0-n效果的sql代码" class="headerlink" title="实现limit 0,n效果的sql代码"></a>实现limit 0,n效果的sql代码</h3><p>代码: <code>select * from xsql where if(@a is null, (select @a:=2), 0) or if(@a&gt;=1, (select @a:=@a-1), 0)</code><br>代码逻辑<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">if(@a is null, (select @a:=2), 0)    // 如果 @a 为空,给@a赋值4,并返回2, 否则返回0</span><br><span class="line">第一次匹配行的时候,会进行赋值,这时候第一行返2, 第一行会匹配</span><br><span class="line">第二次匹配判断@a不是null,所以第一个表达式返回0,进行后半部分判断</span><br><span class="line">后半部分因为@a第一次赋值了为2,所以@a&gt;=1成立, 对@a进行递减1,并且返回1, 第二行也会被匹配</span><br><span class="line">第三次匹配时,@a&gt;=1为真,执行(select @a:=@a-1), 这里返回的是0为假,所以不返回第三行</span><br><span class="line">就实现了limit 0,2</span><br></pre></td></tr></table></figure></p>
+<h3 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h3><ul>
+<li>这里用<code>ifnull</code>这个函数,可以减少很多代码量</li>
+<li><code>limit n,1</code> 也可实现</li>
+<li>官方文档是好东西, 很多方法都能瞧瞧 <a href="https://dev.mysql.com/doc/" target="_blank" rel="noopener">传送门</a></li>
+</ul>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+         
+          <li><a href="/link/">FriendLink</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#环境准备"><span class="toc-number">1.</span> <span class="toc-text">环境准备</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#and-or的惰性计算"><span class="toc-number">2.</span> <span class="toc-text">and/or的惰性计算</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#where在使用的时候的特性"><span class="toc-number">3.</span> <span class="toc-text">where在使用的时候的特性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实现limit-0-n效果的sql代码"><span class="toc-number">4.</span> <span class="toc-text">实现limit 0,n效果的sql代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#写在最后"><span class="toc-number">5.</span> <span class="toc-text">写在最后</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://1oid.github.io/2019/01/05/mysql-limit-imitate/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://1oid.github.io/2019/01/05/mysql-limit-imitate/&text=mysql limit imitate"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://1oid.github.io/2019/01/05/mysql-limit-imitate/&title=mysql limit imitate"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://1oid.github.io/2019/01/05/mysql-limit-imitate/&is_video=false&description=mysql limit imitate"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=mysql limit imitate&body=Check out this article: https://1oid.github.io/2019/01/05/mysql-limit-imitate/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://1oid.github.io/2019/01/05/mysql-limit-imitate/&title=mysql limit imitate"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://1oid.github.io/2019/01/05/mysql-limit-imitate/&title=mysql limit imitate"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://1oid.github.io/2019/01/05/mysql-limit-imitate/&title=mysql limit imitate"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://1oid.github.io/2019/01/05/mysql-limit-imitate/&title=mysql limit imitate"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://1oid.github.io/2019/01/05/mysql-limit-imitate/&name=mysql limit imitate&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2019 Loid
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+         
+          <li><a href="/link/">FriendLink</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
