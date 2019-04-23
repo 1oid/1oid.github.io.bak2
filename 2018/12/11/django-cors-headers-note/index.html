@@ -151,12 +151,7 @@
 <li>配置<code>setting.py</code><ul>
 <li><code>INSTALLED_APPS</code>中添加<code>corsheaders</code></li>
 <li><code>MIDDLEWARE</code> 中添加 <code>corsheaders.middleware.CorsMiddleware</code></li>
-<li>最后添加一个新行, 作用时添加跨域白名单<pre><code class="python">CORS_ORIGIN_WHITELIST = (
-&#39;127.0.0.1:8020&#39;,
-&#39;localhost:8080&#39;, 
-)
-CORS_ALLOW_CREDENTIALS = True
-</code></pre>
+<li>最后添加一个新行, 作用时添加跨域白名单<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">CORS_ORIGIN_WHITELIST = (</span><br><span class="line">    <span class="string">'127.0.0.1:8020'</span>,</span><br><span class="line">    <span class="string">'localhost:8080'</span>, </span><br><span class="line">)</span><br><span class="line">CORS_ALLOW_CREDENTIALS = <span class="keyword">True</span></span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 </li>
