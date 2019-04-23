@@ -6,17 +6,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="创建superuser  python manage.py createsuperuser --username=joe --email=joe@example.com  修改密码  12345&amp;gt;&amp;gt;&amp;gt; from django.contrib.auth.models import User&amp;gt;&amp;gt;&amp;gt; u = User.objects.get(username=&amp;ap">
+    <meta name="description" content="创建superuser  python manage.py createsuperuser --username=joe --email=joe@example.com  修改密码   &amp;gt;&amp;gt;&amp;gt; from django.contrib.auth.models import User &amp;gt;&amp;gt;&amp;gt; u = User.objects.get(username=&amp;#39;j">
 <meta property="og:type" content="article">
 <meta property="og:title" content="django身份认证学习笔记">
 <meta property="og:url" content="https://1oid.github.io/2019/04/01/django-authenticate-study/index.html">
 <meta property="og:site_name" content="Loid&#39;s Blog">
-<meta property="og:description" content="创建superuser  python manage.py createsuperuser --username=joe --email=joe@example.com  修改密码  12345&amp;gt;&amp;gt;&amp;gt; from django.contrib.auth.models import User&amp;gt;&amp;gt;&amp;gt; u = User.objects.get(username=&amp;ap">
+<meta property="og:description" content="创建superuser  python manage.py createsuperuser --username=joe --email=joe@example.com  修改密码   &amp;gt;&amp;gt;&amp;gt; from django.contrib.auth.models import User &amp;gt;&amp;gt;&amp;gt; u = User.objects.get(username=&amp;#39;j">
 <meta property="og:locale" content="default">
 <meta property="og:updated_time" content="2019-04-01T03:04:32.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="django身份认证学习笔记">
-<meta name="twitter:description" content="创建superuser  python manage.py createsuperuser --username=joe --email=joe@example.com  修改密码  12345&amp;gt;&amp;gt;&amp;gt; from django.contrib.auth.models import User&amp;gt;&amp;gt;&amp;gt; u = User.objects.get(username=&amp;ap">
+<meta name="twitter:description" content="创建superuser  python manage.py createsuperuser --username=joe --email=joe@example.com  修改密码   &amp;gt;&amp;gt;&amp;gt; from django.contrib.auth.models import User &amp;gt;&amp;gt;&amp;gt; u = User.objects.get(username=&amp;#39;j">
     
     
         
@@ -47,6 +47,7 @@
     
     
 </head>
+
 
 <body class="max-width mx-auto px3 ltr">
     
@@ -147,24 +148,58 @@
 <ul>
 <li><h3 id="修改密码"><a href="#修改密码" class="headerlink" title="修改密码"></a>修改密码</h3></li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&gt;&gt;&gt; from django.contrib.auth.models import User</span><br><span class="line">&gt;&gt;&gt; u = User.objects.get(username=&apos;john&apos;)</span><br><span class="line">&gt;&gt;&gt; u.set_password(&apos;new password&apos;)</span><br><span class="line">&gt;&gt;&gt; u.save()</span><br></pre></td></tr></table></figure>
-<ul>
+<pre><code>
+&gt;&gt;&gt; from django.contrib.auth.models import User
+&gt;&gt;&gt; u = User.objects.get(username=&#39;john&#39;)
+&gt;&gt;&gt; u.set_password(&#39;new password&#39;)
+&gt;&gt;&gt; u.save()
+</code></pre><ul>
 <li><h3 id="认证Users"><a href="#认证Users" class="headerlink" title="认证Users"></a>认证Users</h3></li>
 </ul>
 <p><code>authenticate</code></p>
 <blockquote>
 <p>使用默认配置时的参数是username 和 password, 如果密码能够匹配给定的用户名,他就返回一个User对象. 如果密码无效,那么authenticate 就返回None.</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">username, password = request.POST[&apos;username&apos;], request.POST[&apos;password&apos;]</span><br><span class="line"></span><br><span class="line">user = authenticate(username=username, password=password)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 判断账号密码是否匹配</span><br><span class="line"></span><br><span class="line">if user is not None:</span><br><span class="line"></span><br><span class="line">    #判断用户是否被激活</span><br><span class="line"></span><br><span class="line">        if user.is_active:</span><br><span class="line"></span><br><span class="line">            # 登录user</span><br><span class="line"></span><br><span class="line">            login(request, user)</span><br><span class="line"></span><br><span class="line">            return render(request, &quot;index.html&quot;, &#123;&quot;Auth&quot;: request.user&#125;)</span><br><span class="line"></span><br><span class="line">        return HttpResponse(&quot;User not active!Concat the website administrator!&quot;)</span><br><span class="line"></span><br><span class="line">return HttpResponse(&quot;Not Current User!&quot;)</span><br></pre></td></tr></table></figure>
-<ul>
+<pre><code>
+username, password = request.POST[&#39;username&#39;], request.POST[&#39;password&#39;]
+
+user = authenticate(username=username, password=password)
+
+
+
+# 判断账号密码是否匹配
+
+if user is not None:
+
+    #判断用户是否被激活
+
+        if user.is_active:
+
+            # 登录user
+
+            login(request, user)
+
+            return render(request, &quot;index.html&quot;, {&quot;Auth&quot;: request.user})
+
+        return HttpResponse(&quot;User not active!Concat the website administrator!&quot;)
+
+return HttpResponse(&quot;Not Current User!&quot;)
+
+</code></pre><ul>
 <li><h3 id="Web请求中的认证"><a href="#Web请求中的认证" class="headerlink" title="Web请求中的认证"></a>Web请求中的认证</h3></li>
 </ul>
 <blockquote>
 <p>djang在请求(request)上, 提供一个request.user属性,表示当前用户,如果用户没有登入,</p>
 </blockquote>
 <p>该属性将设置成匿名用户(AnonymousUser)的一个实例, 可以用is_authenticated()来判断是否登入.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">if request.user.is_authenticated():</span><br><span class="line"></span><br><span class="line">	return render(request, &quot;index.html&quot;, &#123;&quot;Auth&quot;: request.user&#125;)</span><br><span class="line"></span><br><span class="line">return render(request, &quot;login.html&quot;)</span><br></pre></td></tr></table></figure>
-<ul>
+<pre><code>
+if request.user.is_authenticated():
+
+    return render(request, &quot;index.html&quot;, {&quot;Auth&quot;: request.user})
+
+return render(request, &quot;login.html&quot;)
+
+</code></pre><ul>
 <li><h3 id="用户的登入与登出"><a href="#用户的登入与登出" class="headerlink" title="用户的登入与登出"></a>用户的登入与登出</h3></li>
 </ul>
 <blockquote>
@@ -172,8 +207,24 @@
 </blockquote>
 <p>from django.contrib.auth import login, logout</p>
 <p>登入</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">user = authenticate(username=username, password=password)</span><br><span class="line"></span><br><span class="line">if user is not None:</span><br><span class="line"></span><br><span class="line">    if user.is_active:</span><br><span class="line"></span><br><span class="line">        login(request,user)</span><br><span class="line"></span><br><span class="line">    else:</span><br><span class="line"></span><br><span class="line">        ......</span><br><span class="line"></span><br><span class="line">else: </span><br><span class="line"></span><br><span class="line">    ...</span><br></pre></td></tr></table></figure>
-<p>登出</p>
+<pre><code>
+user = authenticate(username=username, password=password)
+
+if user is not None:
+
+    if user.is_active:
+
+        login(request,user)
+
+    else:
+
+        ......
+
+else: 
+
+    ...
+
+</code></pre><p>登出</p>
 <p><code>logout(request)</code></p>
 <ul>
 <li><h3 id="只允许登入用户访问"><a href="#只允许登入用户访问" class="headerlink" title="只允许登入用户访问"></a>只允许登入用户访问</h3></li>
@@ -182,16 +233,34 @@
 <blockquote>
 <p>此处用Decorating the class 装饰类, 此处不直接用login_required() 函数装饰器</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">from django.contrib.auth.decorators import login_required</span><br><span class="line"></span><br><span class="line">from django.utils.decorators import method_decorator</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class UserLook(View):</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    @method_decorator(login_required(login_url=&apos;/&apos;))</span><br><span class="line"></span><br><span class="line">    def get(self, request):</span><br><span class="line"></span><br><span class="line">        return render(request, &apos;login.html&apos;, )</span><br></pre></td></tr></table></figure>
-<blockquote>
+<pre><code>
+from django.contrib.auth.decorators import login_required
+
+from django.utils.decorators import method_decorator
+
+
+
+class UserLook(View):
+
+
+
+    @method_decorator(login_required(login_url=&#39;/&#39;))
+
+    def get(self, request):
+
+        return render(request, &#39;login.html&#39;, )
+
+</code></pre><blockquote>
 <p>如果此处没有对login_url 进行定义, 那就需要确保settings.LOGIN_URL与你的登录视图正确关联, 例如,使用默认值,可以添加下面几行到你的URLconf种:</p>
 </blockquote>
 <pre><code>    from django.contrib.auth import views as auth_views
 
-url(r&apos;^accounts/login/$&apos;, auth_views.login),
+url(r&#39;^accounts/login/$&#39;, auth_views.login),
 </code></pre><ul>
-<li><h3 id="给已验证的用户添加访问限制-只允许特定用户访问某些特定页面"><a href="#给已验证的用户添加访问限制-只允许特定用户访问某些特定页面" class="headerlink" title="给已验证的用户添加访问限制 (只允许特定用户访问某些特定页面)"></a>给已验证的用户添加访问限制 (只允许特定用户访问某些特定页面)</h3><code>request.user.email.endswith(&#39;@example.com&#39;) 返回True/False</code><br>或者使用 <code>user_pass_test(func[,login_url=None,....])</code><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">from django.contrib.auth.decorators import user_passes_test</span><br><span class="line"></span><br><span class="line">def email_check(user):</span><br><span class="line">    return user.email.endswith(&apos;@example.com&apos;)</span><br><span class="line"></span><br><span class="line">@user_passes_test(email_check)</span><br><span class="line">def my_view(request):</span><br><span class="line">    ...</span><br></pre></td></tr></table></figure></li>
+<li><h3 id="给已验证的用户添加访问限制-只允许特定用户访问某些特定页面"><a href="#给已验证的用户添加访问限制-只允许特定用户访问某些特定页面" class="headerlink" title="给已验证的用户添加访问限制 (只允许特定用户访问某些特定页面)"></a>给已验证的用户添加访问限制 (只允许特定用户访问某些特定页面)</h3><code>request.user.email.endswith(&#39;@example.com&#39;) 返回True/False</code><br>或者使用 <code>user_pass_test(func[,login_url=None,....])</code><br><code>`</code><br>from django.contrib.auth.decorators import user_passes_test</li>
 </ul>
+<p>def email_check(user):<br>    return user.email.endswith(<a href="mailto:&#39;@example.com" target="_blank" rel="noopener">&#39;@example.com</a>‘)</p>
+<p>@user_passes_test(email_check)<br>def my_view(request):<br>    …<br><code>`</code></p>
 
   </div>
 </article>
@@ -278,11 +347,12 @@ url(r&apos;^accounts/login/$&apos;, auth_views.login),
 <!-- styles -->
 <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
 <link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
-
+<link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.2.0/styles/github.min.css">
 <!-- jquery -->
 <script src="/lib/jquery/jquery.min.js"></script>
 <script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
 <script src="/js/main.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.2.0/highlight.min.js"></script>
 <!-- search -->
 
 <!-- Google Analytics -->
@@ -291,4 +361,8 @@ url(r&apos;^accounts/login/$&apos;, auth_views.login),
 
 <!-- Disqus Comments -->
 
+
+<script>
+  hljs.initHighlightingOnLoad();
+</script>
 
