@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="nodeMCU捣鼓笔记  这个小东西是安卓老师送我的,然后就一直在捣鼓这个玩意儿.挺好玩的,这捣鼓的过程也学到了很多东西.    网上资料也算比较多,只是遇到很多问题,也捣鼓了很久.  首先你要有一个nodeMCU, 他是长这样的,并且我的是 ESP8266    到手之后,首先是找文档瞅瞅官方文档可以看到快速开始的三步骤 step1. 构建固件(选择你自己喜欢的模块构建) step2. 刷入固件">
+<meta property="og:type" content="article">
+<meta property="og:title" content="nodemcu flush and wifiscanner">
+<meta property="og:url" content="https://1oid.github.io/2018/10/14/nodemcu-flush-and-wifiscanner/index.html">
+<meta property="og:site_name" content="Loid&#39;s Blog">
+<meta property="og:description" content="nodeMCU捣鼓笔记  这个小东西是安卓老师送我的,然后就一直在捣鼓这个玩意儿.挺好玩的,这捣鼓的过程也学到了很多东西.    网上资料也算比较多,只是遇到很多问题,也捣鼓了很久.  首先你要有一个nodeMCU, 他是长这样的,并且我的是 ESP8266    到手之后,首先是找文档瞅瞅官方文档可以看到快速开始的三步骤 step1. 构建固件(选择你自己喜欢的模块构建) step2. 刷入固件">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://user-images.githubusercontent.com/19285429/58573326-144c3f00-8270-11e9-86b2-ab467b6eabbb.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/19285429/58573453-4fe70900-8270-11e9-9032-be6ac48ab07d.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/19285429/58573506-7c9b2080-8270-11e9-940f-c5c51596671b.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/19285429/58573545-92a8e100-8270-11e9-8b2b-6559ca678acd.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/19285429/58573555-98062b80-8270-11e9-96d7-839820e0bb43.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/19285429/58573639-bf5cf880-8270-11e9-8e20-e9031337fa74.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/19285429/58573642-c257e900-8270-11e9-8b6b-eb21971fa727.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/19285429/58573687-d865a980-8270-11e9-946e-259610cee0b6.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/19285429/58573695-dc91c700-8270-11e9-9f8e-41841a265ade.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/19285429/58573700-e0bde480-8270-11e9-804b-447b8757496d.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/19285429/58573705-e1ef1180-8270-11e9-932a-6fc125cbe0d8.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/19285429/58573717-e4516b80-8270-11e9-870a-cef767871844.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/19285429/58573723-e6b3c580-8270-11e9-824d-3824913a7c12.png">
+<meta property="og:updated_time" content="2019-05-29T16:23:52.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="nodemcu flush and wifiscanner">
+<meta name="twitter:description" content="nodeMCU捣鼓笔记  这个小东西是安卓老师送我的,然后就一直在捣鼓这个玩意儿.挺好玩的,这捣鼓的过程也学到了很多东西.    网上资料也算比较多,只是遇到很多问题,也捣鼓了很久.  首先你要有一个nodeMCU, 他是长这样的,并且我的是 ESP8266    到手之后,首先是找文档瞅瞅官方文档可以看到快速开始的三步骤 step1. 构建固件(选择你自己喜欢的模块构建) step2. 刷入固件">
+<meta name="twitter:image" content="https://user-images.githubusercontent.com/19285429/58573326-144c3f00-8270-11e9-86b2-ab467b6eabbb.png">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>nodemcu flush and wifiscanner</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+         
+          <li><a href="/link/">FriendLink</a></li>
+        
+      </ul>
+    </span>
+    <br>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2018/11/26/django-extends-AbstractUser-Foreignkey/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2018/02/13/binary-basic-one/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://1oid.github.io/2018/10/14/nodemcu-flush-and-wifiscanner/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://1oid.github.io/2018/10/14/nodemcu-flush-and-wifiscanner/&text=nodemcu flush and wifiscanner"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://1oid.github.io/2018/10/14/nodemcu-flush-and-wifiscanner/&title=nodemcu flush and wifiscanner"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://1oid.github.io/2018/10/14/nodemcu-flush-and-wifiscanner/&is_video=false&description=nodemcu flush and wifiscanner"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=nodemcu flush and wifiscanner&body=Check out this article: https://1oid.github.io/2018/10/14/nodemcu-flush-and-wifiscanner/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://1oid.github.io/2018/10/14/nodemcu-flush-and-wifiscanner/&title=nodemcu flush and wifiscanner"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://1oid.github.io/2018/10/14/nodemcu-flush-and-wifiscanner/&title=nodemcu flush and wifiscanner"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://1oid.github.io/2018/10/14/nodemcu-flush-and-wifiscanner/&title=nodemcu flush and wifiscanner"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://1oid.github.io/2018/10/14/nodemcu-flush-and-wifiscanner/&title=nodemcu flush and wifiscanner"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://1oid.github.io/2018/10/14/nodemcu-flush-and-wifiscanner/&name=nodemcu flush and wifiscanner&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#nodeMCU捣鼓笔记"><span class="toc-number">1.</span> <span class="toc-text">nodeMCU捣鼓笔记</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#准备工作结束"><span class="toc-number">2.</span> <span class="toc-text">准备工作结束</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#编写并上传脚本"><span class="toc-number">3.</span> <span class="toc-text">编写并上传脚本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#开机自动部署"><span class="toc-number">4.</span> <span class="toc-text">开机自动部署</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope="" itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        nodemcu flush and wifiscanner
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+        <span itemprop="name">Loid's Blog</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2018-10-14T19:45:09.000Z" itemprop="datePublished">2018-10-14</time>
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h3 id="nodeMCU捣鼓笔记"><a href="#nodeMCU捣鼓笔记" class="headerlink" title="nodeMCU捣鼓笔记"></a>nodeMCU捣鼓笔记</h3><hr>
+<blockquote>
+<p>这个小东西是安卓老师送我的,然后就一直在捣鼓这个玩意儿.挺好玩的,这捣鼓的过程也学到了很多东西.<br>    网上资料也算比较多,只是遇到很多问题,也捣鼓了很久.</p>
+<ul>
+<li>首先你要有一个nodeMCU, 他是长这样的,并且我的是 <code>ESP8266</code><br><img src="https://user-images.githubusercontent.com/19285429/58573326-144c3f00-8270-11e9-86b2-ab467b6eabbb.png" alt="image"></li>
+</ul>
+</blockquote>
+<ul>
+<li>到手之后,首先是找文档瞅瞅<br><a href="https://nodemcu.readthedocs.io/en/master/" target="_blank" rel="noopener">官方文档</a><br>可以看到快速开始的三步骤<br><img src="https://user-images.githubusercontent.com/19285429/58573453-4fe70900-8270-11e9-9032-be6ac48ab07d.png" alt="image"><ul>
+<li>step1. 构建固件(选择你自己喜欢的模块构建)</li>
+<li>step2. 刷入固件</li>
+<li>step3. 上传代码到设备</li>
+</ul>
+</li>
+<li>通过在线云构建固件 <a href="https://nodemcu-build.com" target="_blank" rel="noopener">cloud build service</a><ul>
+<li>输入要接收固件的邮箱(两次确认, 这里好像并不能用@qq.com,我用的是@163.com)<br><img src="https://user-images.githubusercontent.com/19285429/58573506-7c9b2080-8270-11e9-940f-c5c51596671b.png" alt="image"></li>
+<li>选择需要的<code>模块</code> (因为需要,这里我就只新勾选了一个mqtt模块), 然后就点击最下面的<code>start your build</code><br><img src="https://user-images.githubusercontent.com/19285429/58573545-92a8e100-8270-11e9-8b2b-6559ca678acd.png" alt="image"></li>
+<li>等会儿就可以收到email(一共两条email,其中一条是固件下载地址)<br><img src="https://user-images.githubusercontent.com/19285429/58573555-98062b80-8270-11e9-96d7-839820e0bb43.png" alt="image"></li>
+</ul>
+</li>
+<li>准备刷入固件的工具<blockquote>
+<p>官方这里推荐了几个工具,一个是 <code>esptool.py</code> , 另一个是 <code>NodeMCU PyFlasher</code> 等<br>这里我推荐用后者,后者图形化也简单些 <a href="https://github.com/marcelstoer/nodemcu-pyflasher" target="_blank" rel="noopener">NodeMCU PyFlasher</a></p>
+</blockquote>
+</li>
+<li>固件刷入<blockquote>
+<p>根据需要选择. 串口,固件位置,波特率,Flash mode(点击那个小红点会有提示,根据自己的硬件选择,我这里的是esp8266),是否擦除数据<br>ps: 用type-c转usb的转换器的同学,请换个接口,我写这篇文章的时候,一直刷入失败!!!刷了一个下午….我tm…<br><img src="https://user-images.githubusercontent.com/19285429/58573639-bf5cf880-8270-11e9-8e20-e9031337fa74.png" alt="image"></p>
+</blockquote>
+</li>
+</ul>
+<ul>
+<li>使用  <code>ESPlorer</code> 连接nodeMCU并进行<code>脚本编写/上传/运行</code><blockquote>
+<p>我这使用官方的<code>ESPlorer</code> 连接时会有问题(点连接后,发送一个消息才能看到连接成功的回显), 找了一个中文版的可以正常连接<br><img src="https://user-images.githubusercontent.com/19285429/58573642-c257e900-8270-11e9-8b6b-eb21971fa727.png" alt="image"></p>
+</blockquote>
+</li>
+</ul>
+<h3 id="准备工作结束"><a href="#准备工作结束" class="headerlink" title="准备工作结束"></a>准备工作结束</h3><hr>
+<h3 id="编写并上传脚本"><a href="#编写并上传脚本" class="headerlink" title="编写并上传脚本"></a>编写并上传脚本</h3><ul>
+<li><p>整体思路</p>
+<ul>
+<li>作为HTTP Server</li>
+<li>创建AP,可以被其他设备连接</li>
+<li>其他设备通过IP访问Web界面进行Wi-Fi扫描/连接管理</li>
+</ul>
+</li>
+<li><p>项目代码 <a href="https://github.com/1oid/nodeMCU_Code/" target="_blank" rel="noopener">自行找合适的代码</a></p>
+</li>
+<li>这里需要<code>httpServer.lua</code>, <code>table_to_string.lua</code>, <code>start_http.lua</code>, <code>wifi_set_ap.lua</code>, <code>index.html</code><br><img src="https://user-images.githubusercontent.com/19285429/58573687-d865a980-8270-11e9-946e-259610cee0b6.png" alt="image"></li>
+</ul>
+<blockquote>
+<p>Wi-Fi AP的名字和密码可以修改wifi_set_ap.lua</p>
+</blockquote>
+<ul>
+<li>下载<code>httpServer</code>库,编写web接口(<a href="https://github.com/1oid/nodeMCU_Code/tree/master/httpServer" target="_blank" rel="noopener">httpServer方法</a>)<br><img src="https://user-images.githubusercontent.com/19285429/58573695-dc91c700-8270-11e9-9f8e-41841a265ade.png" alt="image"></li>
+</ul>
+<blockquote>
+<p>调用的时候,可以先<code>dofile(filename)</code>导入库,然后调用函数</p>
+</blockquote>
+<ul>
+<li>其他脚本/文件上传如上一步操作</li>
+<li><p>测试是否可用</p>
+<ul>
+<li>发送单行命令依次执行 <code>wifi_set_ap.lua</code> 与 <code>start_http.lua</code> 分别建立热点和创建web服务<ul>
+<li><code>dofile(&#39;wifi_set_ap.lua&#39;)</code> 与 <code>dofile(&#39;start_http.lua&#39;)</code><br><img src="https://user-images.githubusercontent.com/19285429/58573700-e0bde480-8270-11e9-804b-447b8757496d.png" alt="image"></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>手机连接名为<code>nodemcu</code>的Wi-Fi,密码为<code>12345678</code> (这是默认的,修改过<code>wifi_set_ap.lua</code>的不一样)</p>
+</li>
+<li><p>手机浏览器访问 <code>192.168.4.1</code>可以看到web界面<br><img src="https://user-images.githubusercontent.com/19285429/58573705-e1ef1180-8270-11e9-932a-6fc125cbe0d8.png" alt="image"></p>
+</li>
+<li><p>扫描wifi和连接wifi<br><img src="https://user-images.githubusercontent.com/19285429/58573717-e4516b80-8270-11e9-870a-cef767871844.png" alt="image"><br><img src="https://user-images.githubusercontent.com/19285429/58573723-e6b3c580-8270-11e9-824d-3824913a7c12.png" alt="image"></p>
+<blockquote>
+<p>ps: 这里我验证Wi-Fi是否连接成功是等待10秒查看是否获取到ip,<br>如果你有更好的方法验证,可以自己修改下 <code>start_http.lua</code></p>
+</blockquote>
+</li>
+</ul>
+<hr>
+<h3 id="开机自动部署"><a href="#开机自动部署" class="headerlink" title="开机自动部署"></a>开机自动部署</h3><blockquote>
+<p>如果你喜欢开机就自己设置AP和开启Web服务, 可以写一个 <code>init.lua</code>,<br>里面加上开机运行的代码比如<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">dofile</span><span class="params">(<span class="string">'wifi_set_ap.lua'</span>)</span></span></span><br><span class="line"><span class="function"><span class="title">dofile</span><span class="params">(<span class="string">'start_http.lua'</span>)</span></span></span><br></pre></td></tr></table></figure></p>
+</blockquote>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+         
+          <li><a href="/link/">FriendLink</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#nodeMCU捣鼓笔记"><span class="toc-number">1.</span> <span class="toc-text">nodeMCU捣鼓笔记</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#准备工作结束"><span class="toc-number">2.</span> <span class="toc-text">准备工作结束</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#编写并上传脚本"><span class="toc-number">3.</span> <span class="toc-text">编写并上传脚本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#开机自动部署"><span class="toc-number">4.</span> <span class="toc-text">开机自动部署</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://1oid.github.io/2018/10/14/nodemcu-flush-and-wifiscanner/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://1oid.github.io/2018/10/14/nodemcu-flush-and-wifiscanner/&text=nodemcu flush and wifiscanner"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://1oid.github.io/2018/10/14/nodemcu-flush-and-wifiscanner/&title=nodemcu flush and wifiscanner"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://1oid.github.io/2018/10/14/nodemcu-flush-and-wifiscanner/&is_video=false&description=nodemcu flush and wifiscanner"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=nodemcu flush and wifiscanner&body=Check out this article: https://1oid.github.io/2018/10/14/nodemcu-flush-and-wifiscanner/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://1oid.github.io/2018/10/14/nodemcu-flush-and-wifiscanner/&title=nodemcu flush and wifiscanner"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://1oid.github.io/2018/10/14/nodemcu-flush-and-wifiscanner/&title=nodemcu flush and wifiscanner"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://1oid.github.io/2018/10/14/nodemcu-flush-and-wifiscanner/&title=nodemcu flush and wifiscanner"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://1oid.github.io/2018/10/14/nodemcu-flush-and-wifiscanner/&title=nodemcu flush and wifiscanner"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://1oid.github.io/2018/10/14/nodemcu-flush-and-wifiscanner/&name=nodemcu flush and wifiscanner&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2019 Loid
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+         
+          <li><a href="/link/">FriendLink</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+<link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.2.0/styles/github.min.css">
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.2.0/highlight.min.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+<script>
+  hljs.initHighlightingOnLoad();
+</script>
+

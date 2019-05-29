@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="PE文件格式   讲讲什么是PE文件格式？: PE(Portable Executable)是Win32 平台下可执行文件遵守的数据格式, 常见的可执行文(如 *.exe 和 *.dll) 都是典型的PE文件  一个可执行不光包含二进制代码, 还会附带其他的一些信息, 例如“字符串， 菜单，图标，位图，字体等”。程序执行时，操作系统会按照PE文件格式的约定去相应的地方准确地定位各种类型的资源，并">
+<meta property="og:type" content="article">
+<meta property="og:title" content="二进制基础笔记(PE概念到虚拟地址计算)">
+<meta property="og:url" content="https://1oid.github.io/2018/02/13/binary-basic-one/index.html">
+<meta property="og:site_name" content="Loid&#39;s Blog">
+<meta property="og:description" content="PE文件格式   讲讲什么是PE文件格式？: PE(Portable Executable)是Win32 平台下可执行文件遵守的数据格式, 常见的可执行文(如 *.exe 和 *.dll) 都是典型的PE文件  一个可执行不光包含二进制代码, 还会附带其他的一些信息, 例如“字符串， 菜单，图标，位图，字体等”。程序执行时，操作系统会按照PE文件格式的约定去相应的地方准确地定位各种类型的资源，并">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-05-29T16:13:35.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="二进制基础笔记(PE概念到虚拟地址计算)">
+<meta name="twitter:description" content="PE文件格式   讲讲什么是PE文件格式？: PE(Portable Executable)是Win32 平台下可执行文件遵守的数据格式, 常见的可执行文(如 *.exe 和 *.dll) 都是典型的PE文件  一个可执行不光包含二进制代码, 还会附带其他的一些信息, 例如“字符串， 菜单，图标，位图，字体等”。程序执行时，操作系统会按照PE文件格式的约定去相应的地方准确地定位各种类型的资源，并">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>二进制基础笔记(PE概念到虚拟地址计算)</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+         
+          <li><a href="/link/">FriendLink</a></li>
+        
+      </ul>
+    </span>
+    <br>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2018/10/14/nodemcu-flush-and-wifiscanner/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://1oid.github.io/2018/02/13/binary-basic-one/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://1oid.github.io/2018/02/13/binary-basic-one/&text=二进制基础笔记(PE概念到虚拟地址计算)"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://1oid.github.io/2018/02/13/binary-basic-one/&title=二进制基础笔记(PE概念到虚拟地址计算)"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://1oid.github.io/2018/02/13/binary-basic-one/&is_video=false&description=二进制基础笔记(PE概念到虚拟地址计算)"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=二进制基础笔记(PE概念到虚拟地址计算)&body=Check out this article: https://1oid.github.io/2018/02/13/binary-basic-one/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://1oid.github.io/2018/02/13/binary-basic-one/&title=二进制基础笔记(PE概念到虚拟地址计算)"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://1oid.github.io/2018/02/13/binary-basic-one/&title=二进制基础笔记(PE概念到虚拟地址计算)"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://1oid.github.io/2018/02/13/binary-basic-one/&title=二进制基础笔记(PE概念到虚拟地址计算)"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://1oid.github.io/2018/02/13/binary-basic-one/&title=二进制基础笔记(PE概念到虚拟地址计算)"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://1oid.github.io/2018/02/13/binary-basic-one/&name=二进制基础笔记(PE概念到虚拟地址计算)&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope="" itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        二进制基础笔记(PE概念到虚拟地址计算)
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+        <span itemprop="name">Loid's Blog</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2018-02-13T15:17:30.000Z" itemprop="datePublished">2018-02-13</time>
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <ul>
+<li>PE文件格式</li>
+</ul>
+<ul>
+<li><p>讲讲什么是PE文件格式？: PE(<code>Portable Executable</code>)是Win32 平台下可执行文件遵守的数据格式,</p>
+<pre><code>常见的可执行文(如 *.exe 和 *.dll) 都是典型的PE文件
+</code></pre></li>
+<li><p>一个可执行不光包含二进制代码, 还会附带其他的一些信息, 例如“字符串， 菜单，图标，位图，字体等”。程序执行时，操作系统会按照PE文件格式的约定去相应的地方准确地定位各种类型的资源，并分别装入内存的不同区域。</p>
+</li>
+<li><p>PE文件格式把可执行文件分成若干个数据节(<code>section</code>)，不同的资源被存在不同的节中<br>一个典型的PE文件包含的节如下<br> <code>.text</code> 由编译器产生， 存放二进制的机器代码，也是我们反汇编和调试的对象<br>  <code>.data</code>  初始化的数据块， 比如宏定义，全局变量， 静态变量等<br>  <code>.idata</code> 可执行文件所使用的动态链接库等外来函数与文件的信息<br>  <code>.rsrc</code>  存放程序的资源，如图标，菜单等</p>
+</li>
+</ul>
+<ul>
+<li>虚拟内存<ul>
+<li>虚拟内存是普通用户(<code>ring3</code>)能看到的</li>
+<li>物理内存是内核级别(<code>ring0</code>)才能看到的</li>
+<li>只有需要进行实际操作内存的时候，内存管理器才会把“虚拟地址”和“物理地址联系起来”<br>内存管理器： 内存管理器只是分配给进程了一片 “虚拟地址”</li>
+<li>虚拟内存和物理内存相当于现实生活中的银行<ul>
+<li>进程相当于储户</li>
+<li>内存管理器相当于钞票</li>
+<li>物理内存相当于钞票</li>
+<li>虚拟内存相当于存款</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>进程不使用虚拟内存时，这些内存只是一些地址，是虚拟存在的，<br>只有在被使用时，内存管理器会为这个虚拟地址映射实际的物理内存地址。</p>
+</blockquote>
+<ul>
+<li><p>PE文件与虚拟内存之间的映射</p>
+<ul>
+<li>静态反汇编工具看到的PE文件中的某条指令的位置是相对于磁盘文件而言的，即所谓的“文件偏移”</li>
+<li>我们可能还需要知道这条指令在内存中所处的为止， 即虚拟内存地址（VA）</li>
+</ul>
+</li>
+<li><p>几个重要概念：</p>
+<ul>
+<li>什么是文件偏移地址(File Offset)？<ul>
+<li>数据在PE文件中的地址叫文件偏移地址，这是文件在磁盘上存放时相对于文件开头的偏移地址</li>
+</ul>
+</li>
+<li>什么是装载基址(Image Base)?<ul>
+<li>PE装入内存时的基地址，默认情况下，EXE文件在内存中的基地址是 0x00400000, DLL文件是0x1000000,            这些为止可以通过修改编译选项更改</li>
+</ul>
+</li>
+<li>什么是虚拟内存地址(Virtual Address, VA)?<ul>
+<li>PE文件中的指令被装入内存后的地址</li>
+</ul>
+</li>
+<li>什么是相对虚拟地址(Relative Virtual Address)?<ul>
+<li>相对虚拟地址是内存相对于映射基址的偏移量</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>虚拟内存地址/映射基址/相对虚拟内存地址三者之间的关系如下<br> <code>VA = Image Base + RVA</code><br> 即  </p>
+<blockquote>
+<p>虚拟内存地址 = 映射基址(装载基址) + 相对虚拟地址</p>
+</blockquote>
+</li>
+<li><p>PE文件中的数据按照磁盘数据标准存放，以0x200字节字节为基本单位进行组织，</p>
+</li>
+</ul>
+<ul>
+<li>当一个数据节(section)不足0x200字节时, 不足的地方被0x00填充,<br>当一个数据节超过0x200字节时,下一个0x200块将分配给这个节使用，<br>因此PE数据节大小永远是0x200的整数倍</li>
+<li>当代码装入内存后， 将按照内存数据标准存放，并以0x1000字节为基本单位进行组织，<br>类似的，不足将被补全，若超出将分配下一个0x1000为其所用。因此，内存中的节总是0x1000的整数倍</li>
+</ul>
+<ul>
+<li>文件偏移地址与虚拟内存地址之间的换算公式<ul>
+<li>节偏移 = <code>相对虚拟偏移量(RVA) - 文件偏移量</code></li>
+<li>文件偏移地址 = <code>虚拟内存地址(VA) - 装载地址(Image Base) - 节偏移 = RAV - 节偏移</code></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+         
+          <li><a href="/link/">FriendLink</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://1oid.github.io/2018/02/13/binary-basic-one/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://1oid.github.io/2018/02/13/binary-basic-one/&text=二进制基础笔记(PE概念到虚拟地址计算)"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://1oid.github.io/2018/02/13/binary-basic-one/&title=二进制基础笔记(PE概念到虚拟地址计算)"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://1oid.github.io/2018/02/13/binary-basic-one/&is_video=false&description=二进制基础笔记(PE概念到虚拟地址计算)"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=二进制基础笔记(PE概念到虚拟地址计算)&body=Check out this article: https://1oid.github.io/2018/02/13/binary-basic-one/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://1oid.github.io/2018/02/13/binary-basic-one/&title=二进制基础笔记(PE概念到虚拟地址计算)"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://1oid.github.io/2018/02/13/binary-basic-one/&title=二进制基础笔记(PE概念到虚拟地址计算)"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://1oid.github.io/2018/02/13/binary-basic-one/&title=二进制基础笔记(PE概念到虚拟地址计算)"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://1oid.github.io/2018/02/13/binary-basic-one/&title=二进制基础笔记(PE概念到虚拟地址计算)"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://1oid.github.io/2018/02/13/binary-basic-one/&name=二进制基础笔记(PE概念到虚拟地址计算)&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2019 Loid
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+         
+          <li><a href="/link/">FriendLink</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+<link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.2.0/styles/github.min.css">
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.2.0/highlight.min.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+<script>
+  hljs.initHighlightingOnLoad();
+</script>
+
