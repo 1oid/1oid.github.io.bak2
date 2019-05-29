@@ -6,12 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="nodeMCU捣鼓笔记  这个小东西是安卓老师送我的,然后就一直在捣鼓这个玩意儿.挺好玩的,这捣鼓的过程也学到了很多东西.    网上资料也算比较多,只是遇到很多问题,也捣鼓了很久.  首先你要有一个nodeMCU, 他是长这样的,并且我的是 ESP8266    到手之后,首先是找文档瞅瞅官方文档可以看到快速开始的三步骤 step1. 构建固件(选择你自己喜欢的模块构建) step2. 刷入固件">
+    <meta name="description" content="nodeMCU捣鼓笔记  这个小东西是安卓老师送我的,然后就一直在捣鼓这个玩意儿.挺好玩的,这捣鼓的过程也学到了很多东西. 网上资料也算比较多,只是遇到很多问题,也捣鼓了很久.   首先你要有一个nodeMCU, 他是长这样的,并且我的是 ESP8266  到手之后,首先是找文档瞅瞅官方文档可以看到快速开始的三步骤  step1. 构建固件(选择你自己喜欢的模块构建) step2. 刷入固件 st">
 <meta property="og:type" content="article">
 <meta property="og:title" content="nodeMCU捣鼓笔记(从固件刷入到wifi扫描)">
 <meta property="og:url" content="https://1oid.github.io/2018/10/14/nodemcu-flush-and-wifiscanner/index.html">
 <meta property="og:site_name" content="Loid&#39;s Blog">
-<meta property="og:description" content="nodeMCU捣鼓笔记  这个小东西是安卓老师送我的,然后就一直在捣鼓这个玩意儿.挺好玩的,这捣鼓的过程也学到了很多东西.    网上资料也算比较多,只是遇到很多问题,也捣鼓了很久.  首先你要有一个nodeMCU, 他是长这样的,并且我的是 ESP8266    到手之后,首先是找文档瞅瞅官方文档可以看到快速开始的三步骤 step1. 构建固件(选择你自己喜欢的模块构建) step2. 刷入固件">
+<meta property="og:description" content="nodeMCU捣鼓笔记  这个小东西是安卓老师送我的,然后就一直在捣鼓这个玩意儿.挺好玩的,这捣鼓的过程也学到了很多东西. 网上资料也算比较多,只是遇到很多问题,也捣鼓了很久.   首先你要有一个nodeMCU, 他是长这样的,并且我的是 ESP8266  到手之后,首先是找文档瞅瞅官方文档可以看到快速开始的三步骤  step1. 构建固件(选择你自己喜欢的模块构建) step2. 刷入固件 st">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://user-images.githubusercontent.com/19285429/58573326-144c3f00-8270-11e9-86b2-ab467b6eabbb.png">
 <meta property="og:image" content="https://user-images.githubusercontent.com/19285429/58573453-4fe70900-8270-11e9-9032-be6ac48ab07d.png">
@@ -26,10 +26,10 @@
 <meta property="og:image" content="https://user-images.githubusercontent.com/19285429/58573705-e1ef1180-8270-11e9-932a-6fc125cbe0d8.png">
 <meta property="og:image" content="https://user-images.githubusercontent.com/19285429/58573717-e4516b80-8270-11e9-870a-cef767871844.png">
 <meta property="og:image" content="https://user-images.githubusercontent.com/19285429/58573723-e6b3c580-8270-11e9-824d-3824913a7c12.png">
-<meta property="og:updated_time" content="2019-05-29T16:26:38.000Z">
+<meta property="og:updated_time" content="2019-05-29T16:33:13.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="nodeMCU捣鼓笔记(从固件刷入到wifi扫描)">
-<meta name="twitter:description" content="nodeMCU捣鼓笔记  这个小东西是安卓老师送我的,然后就一直在捣鼓这个玩意儿.挺好玩的,这捣鼓的过程也学到了很多东西.    网上资料也算比较多,只是遇到很多问题,也捣鼓了很久.  首先你要有一个nodeMCU, 他是长这样的,并且我的是 ESP8266    到手之后,首先是找文档瞅瞅官方文档可以看到快速开始的三步骤 step1. 构建固件(选择你自己喜欢的模块构建) step2. 刷入固件">
+<meta name="twitter:description" content="nodeMCU捣鼓笔记  这个小东西是安卓老师送我的,然后就一直在捣鼓这个玩意儿.挺好玩的,这捣鼓的过程也学到了很多东西. 网上资料也算比较多,只是遇到很多问题,也捣鼓了很久.   首先你要有一个nodeMCU, 他是长这样的,并且我的是 ESP8266  到手之后,首先是找文档瞅瞅官方文档可以看到快速开始的三步骤  step1. 构建固件(选择你自己喜欢的模块构建) step2. 刷入固件 st">
 <meta name="twitter:image" content="https://user-images.githubusercontent.com/19285429/58573326-144c3f00-8270-11e9-86b2-ab467b6eabbb.png">
     
     
@@ -157,13 +157,13 @@
   <div class="content" itemprop="articleBody">
     <h3 id="nodeMCU捣鼓笔记"><a href="#nodeMCU捣鼓笔记" class="headerlink" title="nodeMCU捣鼓笔记"></a>nodeMCU捣鼓笔记</h3><hr>
 <blockquote>
-<p>这个小东西是安卓老师送我的,然后就一直在捣鼓这个玩意儿.挺好玩的,这捣鼓的过程也学到了很多东西.<br>    网上资料也算比较多,只是遇到很多问题,也捣鼓了很久.</p>
-<ul>
-<li>首先你要有一个nodeMCU, 他是长这样的,并且我的是 <code>ESP8266</code><br><img src="https://user-images.githubusercontent.com/19285429/58573326-144c3f00-8270-11e9-86b2-ab467b6eabbb.png" alt="image"></li>
-</ul>
+<p>这个小东西是安卓老师送我的,然后就一直在捣鼓这个玩意儿.挺好玩的,这捣鼓的过程也学到了很多东西. 网上资料也算比较多,只是遇到很多问题,也捣鼓了很久.</p>
 </blockquote>
 <ul>
-<li>到手之后,首先是找文档瞅瞅<br><a href="https://nodemcu.readthedocs.io/en/master/" target="_blank" rel="noopener">官方文档</a><br>可以看到快速开始的三步骤<br><img src="https://user-images.githubusercontent.com/19285429/58573453-4fe70900-8270-11e9-9032-be6ac48ab07d.png" alt="image"><ul>
+<li><p>首先你要有一个nodeMCU, 他是长这样的,并且我的是 <code>ESP8266</code><br><img src="https://user-images.githubusercontent.com/19285429/58573326-144c3f00-8270-11e9-86b2-ab467b6eabbb.png" alt="image"></p>
+</li>
+<li><p>到手之后,首先是找文档瞅瞅<br><a href="https://nodemcu.readthedocs.io/en/master/" target="_blank" rel="noopener">官方文档</a><br>可以看到快速开始的三步骤<br><img src="https://user-images.githubusercontent.com/19285429/58573453-4fe70900-8270-11e9-9032-be6ac48ab07d.png" alt="image"></p>
+<ul>
 <li>step1. 构建固件(选择你自己喜欢的模块构建)</li>
 <li>step2. 刷入固件</li>
 <li>step3. 上传代码到设备</li>
@@ -180,16 +180,18 @@
 </blockquote>
 </li>
 <li>固件刷入<blockquote>
-<p>根据需要选择. 串口,固件位置,波特率,Flash mode(点击那个小红点会有提示,根据自己的硬件选择,我这里的是esp8266),是否擦除数据<br>ps: 用type-c转usb的转换器的同学,请换个接口,我写这篇文章的时候,一直刷入失败!!!刷了一个下午….我tm…<br><img src="https://user-images.githubusercontent.com/19285429/58573639-bf5cf880-8270-11e9-8e20-e9031337fa74.png" alt="image"></p>
+<p>根据需要选择. 串口,固件位置,波特率,Flash mode(点击那个小红点会有提示,根据自己的硬件选择,我这里的是esp8266),是否擦除数据</p>
 </blockquote>
 </li>
 </ul>
+<p>ps: 用type-c转usb的转换器的同学,请换个接口,我写这篇文章的时候,一直刷入失败!!!刷了一个下午….我tm…<br><img src="https://user-images.githubusercontent.com/19285429/58573639-bf5cf880-8270-11e9-8e20-e9031337fa74.png" alt="image"></p>
 <ul>
 <li>使用  <code>ESPlorer</code> 连接nodeMCU并进行<code>脚本编写/上传/运行</code><blockquote>
-<p>我这使用官方的<code>ESPlorer</code> 连接时会有问题(点连接后,发送一个消息才能看到连接成功的回显), 找了一个中文版的可以正常连接<br><img src="https://user-images.githubusercontent.com/19285429/58573642-c257e900-8270-11e9-8b6b-eb21971fa727.png" alt="image"></p>
+<p>我这使用官方的<code>ESPlorer</code> 连接时会有问题(点连接后,发送一个消息才能看到连接成功的回显), 找了一个中文版的可以正常连接</p>
 </blockquote>
 </li>
 </ul>
+<p><img src="https://user-images.githubusercontent.com/19285429/58573642-c257e900-8270-11e9-8b6b-eb21971fa727.png" alt="image"></p>
 <h3 id="准备工作结束"><a href="#准备工作结束" class="headerlink" title="准备工作结束"></a>准备工作结束</h3><hr>
 <h3 id="编写并上传脚本"><a href="#编写并上传脚本" class="headerlink" title="编写并上传脚本"></a>编写并上传脚本</h3><ul>
 <li><p>整体思路</p>
@@ -228,10 +230,11 @@
 </li>
 <li><p>扫描wifi和连接wifi<br><img src="https://user-images.githubusercontent.com/19285429/58573717-e4516b80-8270-11e9-870a-cef767871844.png" alt="image"><br><img src="https://user-images.githubusercontent.com/19285429/58573723-e6b3c580-8270-11e9-824d-3824913a7c12.png" alt="image"></p>
 <blockquote>
-<p>ps: 这里我验证Wi-Fi是否连接成功是等待10秒查看是否获取到ip,<br>如果你有更好的方法验证,可以自己修改下 <code>start_http.lua</code></p>
+<p>ps: 这里我验证Wi-Fi是否连接成功是等待10秒查看是否获取到ip</p>
 </blockquote>
 </li>
 </ul>
+<p>如果你有更好的方法验证,可以自己修改下 <code>start_http.lua</code></p>
 <hr>
 <h3 id="开机自动部署"><a href="#开机自动部署" class="headerlink" title="开机自动部署"></a>开机自动部署</h3><blockquote>
 <p>如果你喜欢开机就自己设置AP和开启Web服务, 可以写一个 <code>init.lua</code>,<br>里面加上开机运行的代码比如<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">dofile</span><span class="params">(<span class="string">'wifi_set_ap.lua'</span>)</span></span></span><br><span class="line"><span class="function"><span class="title">dofile</span><span class="params">(<span class="string">'start_http.lua'</span>)</span></span></span><br></pre></td></tr></table></figure></p>
