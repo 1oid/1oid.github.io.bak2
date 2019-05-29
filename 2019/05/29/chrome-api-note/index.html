@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="chrome.runtime.*    通信 chrome.runtime.sendMessage(extensionId, message, options, callback); 1234chrome.runtime.sendMessage(&apos;Hello&apos;, function(response) &amp;#123;    console.log(response);    document.writ">
+<meta property="og:type" content="article">
+<meta property="og:title" content="chrome api note">
+<meta property="og:url" content="https://1oid.github.io/2019/05/29/chrome-api-note/index.html">
+<meta property="og:site_name" content="Loid&#39;s Blog">
+<meta property="og:description" content="chrome.runtime.*    通信 chrome.runtime.sendMessage(extensionId, message, options, callback); 1234chrome.runtime.sendMessage(&apos;Hello&apos;, function(response) &amp;#123;    console.log(response);    document.writ">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-05-29T15:53:30.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="chrome api note">
+<meta name="twitter:description" content="chrome.runtime.*    通信 chrome.runtime.sendMessage(extensionId, message, options, callback); 1234chrome.runtime.sendMessage(&apos;Hello&apos;, function(response) &amp;#123;    console.log(response);    document.writ">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>chrome api note</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+         
+          <li><a href="/link/">FriendLink</a></li>
+        
+      </ul>
+    </span>
+    <br>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/2019/04/23/Python-with-Rabbitmq-Basic/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://1oid.github.io/2019/05/29/chrome-api-note/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://1oid.github.io/2019/05/29/chrome-api-note/&text=chrome api note"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://1oid.github.io/2019/05/29/chrome-api-note/&title=chrome api note"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://1oid.github.io/2019/05/29/chrome-api-note/&is_video=false&description=chrome api note"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=chrome api note&body=Check out this article: https://1oid.github.io/2019/05/29/chrome-api-note/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://1oid.github.io/2019/05/29/chrome-api-note/&title=chrome api note"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://1oid.github.io/2019/05/29/chrome-api-note/&title=chrome api note"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://1oid.github.io/2019/05/29/chrome-api-note/&title=chrome api note"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://1oid.github.io/2019/05/29/chrome-api-note/&title=chrome api note"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://1oid.github.io/2019/05/29/chrome-api-note/&name=chrome api note&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#chrome-runtime-通信"><span class="toc-number">1.</span> <span class="toc-text">chrome.runtime.*    通信</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#chrome-storage-StorageArea-存储API-“permissions”声明-“storage”"><span class="toc-number">2.</span> <span class="toc-text">chrome.storage.StorageArea.*    存储API, “permissions”声明 “storage”</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#chrome-storage-onChanged-当存储区的数据发生改变时-此方法会被激发"><span class="toc-number">3.</span> <span class="toc-text">chrome.storage.onChanged      当存储区的数据发生改变时, 此方法会被激发</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#chrome-context-Menus-将扩展加入到右键菜单"><span class="toc-number">4.</span> <span class="toc-text">chrome.context.Menus.*        将扩展加入到右键菜单</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#chrome-browserAction-setIcon-details-callback"><span class="toc-number">5.</span> <span class="toc-text">chrome.browserAction.setIcon(details, callback)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#chrome-browserAction-setBadge"><span class="toc-number">6.</span> <span class="toc-text">chrome.browserAction.setBadge**</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#chrome-tabs"><span class="toc-number">7.</span> <span class="toc-text">chrome.tabs.*</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#chrome-downloads"><span class="toc-number">8.</span> <span class="toc-text">chrome.downloads.*</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope="" itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        chrome api note
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+        <span itemprop="name">Loid's Blog</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2019-05-29T15:47:34.000Z" itemprop="datePublished">2019-05-29</time>
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h3 id="chrome-runtime-通信"><a href="#chrome-runtime-通信" class="headerlink" title="chrome.runtime.*    通信"></a>chrome.runtime.*    通信</h3><ul>
+<li><p><code>chrome.runtime.sendMessage(extensionId, message, options, callback);</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">chrome.runtime.sendMessage(<span class="string">'Hello'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">response</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(response);</span><br><span class="line">    <span class="built_in">document</span>.write(response);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>chrome.runtime.onMessage.addListener(callback)</code></p>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">chrome.runtime.onMessage.addListener(<span class="function"><span class="keyword">function</span><span class="params">(message, sender, sendResponse)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(message == <span class="string">'Hello'</span>) &#123;</span><br><span class="line">        sendResponse(<span class="string">'I recive it...'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="chrome-storage-StorageArea-存储API-“permissions”声明-“storage”"><a href="#chrome-storage-StorageArea-存储API-“permissions”声明-“storage”" class="headerlink" title="chrome.storage.StorageArea.*    存储API, “permissions”声明 “storage”"></a>chrome.storage.StorageArea.*    存储API, “permissions”声明 “storage”</h3><ul>
+<li><code>chrome.storage.StorageArea.get(keys, function(result) { console.log(result) });</code><ul>
+<li><code>keys</code> 可以是字符串/数组/对象/</li>
+</ul>
+</li>
+<li><code>chrome.storage.StorageArea.getByetsInUse(keys, function(bytes){....});</code><ul>
+<li>该方法获取一个数据或者多个数据所占的总空间,返回结果的单位是字节</li>
+</ul>
+</li>
+<li><code>chrome.storage.StorageArea.set(items, function(){...});</code><ul>
+<li>该方法为写入数据</li>
+<li><code>items</code> 为对象类型,形式为 <strong>键</strong>/<strong>值</strong> 对.</li>
+</ul>
+</li>
+<li><code>chrome.storage.StorageArea.remove(keys, function(){....});</code><ul>
+<li>该方法为删除数据</li>
+<li>keys 可以是字符串也可以是包含多个字符串的数组</li>
+</ul>
+</li>
+<li><code>chrome.storage.StorageArea.clear(keys, function(){....});</code><ul>
+<li>清空所有数据</li>
+</ul>
+</li>
+</ul>
+<h3 id="chrome-storage-onChanged-当存储区的数据发生改变时-此方法会被激发"><a href="#chrome-storage-onChanged-当存储区的数据发生改变时-此方法会被激发" class="headerlink" title="chrome.storage.onChanged      当存储区的数据发生改变时, 此方法会被激发"></a>chrome.storage.onChanged      当存储区的数据发生改变时, 此方法会被激发</h3><ul>
+<li><code>chrome.storage.onChanged.addListener(function(changs, areaName) {...});</code><ul>
+<li><code>changes</code> 字典对象,  包含<code>oldValue</code>/<code>newValue</code>两个属性</li>
+<li><code>StorageArea</code> 为 <code>local</code>/<code>sync</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="chrome-context-Menus-将扩展加入到右键菜单"><a href="#chrome-context-Menus-将扩展加入到右键菜单" class="headerlink" title="chrome.context.Menus.*        将扩展加入到右键菜单"></a>chrome.context.Menus.*        将扩展加入到右键菜单</h3><ul>
+<li><code>chrome.context.Menus.create({type: &quot;&quot;, title: &quot;&quot;, id:&quot;&quot;,...., parentId: &quot;...&quot;})</code><ul>
+<li><code>type</code>可以是 <code>normal</code>,<code>radio</code>, <code>checkbox</code>(带checked属性, 值为false/true), ….</li>
+<li><code>parentId</code> 指定父级</li>
+<li><code>contexts</code> 显示条件, [“…”], 数组中可以是 <code>all, page, frame, selection, link, editable, image, video, audio, launcher</code>. <strong>eg: contexts: [“link”] //右键链接到时候有</strong> . 默认为<code>page</code>, 即所有页面</li>
+<li><code>onclick</code> 绑定函数<ul>
+<li>函数接收两个数据, <code>info</code>/<code>tab</code></li>
+<li><code>info</code> 接收数据, 主要属性, <code>id</code> 值为当前contextMenu的id, <code>selectionText</code> 数据</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>*.update</code></li>
+<li><code>*.remove</code> </li>
+</ul>
+<h3 id="chrome-browserAction-setIcon-details-callback"><a href="#chrome-browserAction-setIcon-details-callback" class="headerlink" title="chrome.browserAction.setIcon(details, callback)"></a><code>chrome.browserAction.setIcon(details, callback)</code></h3><p><code>...setIcon({path:{&#39;19&#39;: &#39;imagepth&#39;}})</code></p>
+<h3 id="chrome-browserAction-setBadge"><a href="#chrome-browserAction-setBadge" class="headerlink" title="chrome.browserAction.setBadge**"></a>chrome.browserAction.setBadge**</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">chrome</span><span class="selector-class">.browserAction</span><span class="selector-class">.setBadgeBackgroundColor</span>(&#123;<span class="attribute">color</span>: <span class="string">"green"</span>&#125;);</span><br><span class="line"><span class="selector-tag">chrome</span><span class="selector-class">.browserAction</span><span class="selector-class">.setBadgeText</span>(&#123;<span class="attribute">text</span>: <span class="string">"OK"</span>&#125;);</span><br><span class="line">注意: 要放到 <span class="selector-tag">bg</span><span class="selector-class">.js</span></span><br></pre></td></tr></table></figure>
+<h3 id="chrome-tabs"><a href="#chrome-tabs" class="headerlink" title="chrome.tabs.*"></a>chrome.tabs.*</h3><p><code>chrome.tabs.onCreated.addListener(function(tab) {...})</code><br><code>chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {...})</code><br><code>chrome.tabs.onMoved.addListener(function(tab, moveInfo) {...})</code><br><code>chrome.tabs.onActivated.addListener(function(activeInfo) {...})</code><br><code>chrome.tabs.onHighlighted.addListener(function(highlightInfo) {...})</code></p>
+<ul>
+<li><code>active</code> 指标签在当前窗口中正被显示</li>
+<li><code>highlight</code> 只是标签的颜色被显示成了白色–如果此标签没有被选中, 正常情况是灰色</li>
+</ul>
+<p><code>chrome.tabs.onDetached.addListener(function(tabId, detachInfo)){...}</code></p>
+<ul>
+<li><code>onDetached</code> 是标签脱离窗口时,所触发的事件<br><code>chrome.tabs.onAttached.addListener(function(tabId,attachInfo)){...}</code></li>
+<li><code>onAttached</code> 是标签附着到窗口上时触发的事件</li>
+</ul>
+<h3 id="chrome-downloads"><a href="#chrome-downloads" class="headerlink" title="chrome.downloads.*"></a>chrome.downloads.*</h3><ul>
+<li><code>chrome.downloads.download(options, callback);</code></li>
+</ul>
+<ul>
+<li><p><code>options 结构</code></p>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line"><span class="symbol">    url:</span> 下载文件的url</span><br><span class="line"><span class="symbol">    filename:</span> 保存的文件名,</span><br><span class="line"><span class="symbol">    conflictAction:</span> 重命名文件的处理方式,</span><br><span class="line"><span class="symbol">    saveAs:</span> 是否弹出另存为窗口,</span><br><span class="line"><span class="symbol">    method:</span> 请求方式(GET或者POST),</span><br><span class="line"><span class="symbol">    headers:</span> 自定义headers数组</span><br><span class="line"><span class="symbol">    body:</span> POST的数据</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>conflictAction</code> 的值只能是</p>
+<ul>
+<li><code>uniquify</code> 在文件后面添加带括号的序号,以保证文件名唯一</li>
+<li><code>overwrite</code> 覆盖</li>
+<li><code>prompt</code> 给出提示, 让用户决定是覆盖还是重命名</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+         
+          <li><a href="/link/">FriendLink</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#chrome-runtime-通信"><span class="toc-number">1.</span> <span class="toc-text">chrome.runtime.*    通信</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#chrome-storage-StorageArea-存储API-“permissions”声明-“storage”"><span class="toc-number">2.</span> <span class="toc-text">chrome.storage.StorageArea.*    存储API, “permissions”声明 “storage”</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#chrome-storage-onChanged-当存储区的数据发生改变时-此方法会被激发"><span class="toc-number">3.</span> <span class="toc-text">chrome.storage.onChanged      当存储区的数据发生改变时, 此方法会被激发</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#chrome-context-Menus-将扩展加入到右键菜单"><span class="toc-number">4.</span> <span class="toc-text">chrome.context.Menus.*        将扩展加入到右键菜单</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#chrome-browserAction-setIcon-details-callback"><span class="toc-number">5.</span> <span class="toc-text">chrome.browserAction.setIcon(details, callback)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#chrome-browserAction-setBadge"><span class="toc-number">6.</span> <span class="toc-text">chrome.browserAction.setBadge**</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#chrome-tabs"><span class="toc-number">7.</span> <span class="toc-text">chrome.tabs.*</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#chrome-downloads"><span class="toc-number">8.</span> <span class="toc-text">chrome.downloads.*</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://1oid.github.io/2019/05/29/chrome-api-note/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://1oid.github.io/2019/05/29/chrome-api-note/&text=chrome api note"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://1oid.github.io/2019/05/29/chrome-api-note/&title=chrome api note"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://1oid.github.io/2019/05/29/chrome-api-note/&is_video=false&description=chrome api note"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=chrome api note&body=Check out this article: https://1oid.github.io/2019/05/29/chrome-api-note/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://1oid.github.io/2019/05/29/chrome-api-note/&title=chrome api note"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://1oid.github.io/2019/05/29/chrome-api-note/&title=chrome api note"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://1oid.github.io/2019/05/29/chrome-api-note/&title=chrome api note"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://1oid.github.io/2019/05/29/chrome-api-note/&title=chrome api note"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://1oid.github.io/2019/05/29/chrome-api-note/&name=chrome api note&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2019 Loid
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+         
+          <li><a href="/link/">FriendLink</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+<link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.2.0/styles/github.min.css">
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.2.0/highlight.min.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+<script>
+  hljs.initHighlightingOnLoad();
+</script>
+
