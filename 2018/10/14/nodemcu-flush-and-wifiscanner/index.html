@@ -26,7 +26,7 @@
 <meta property="og:image" content="https://user-images.githubusercontent.com/19285429/58573705-e1ef1180-8270-11e9-932a-6fc125cbe0d8.png">
 <meta property="og:image" content="https://user-images.githubusercontent.com/19285429/58573717-e4516b80-8270-11e9-870a-cef767871844.png">
 <meta property="og:image" content="https://user-images.githubusercontent.com/19285429/58573723-e6b3c580-8270-11e9-824d-3824913a7c12.png">
-<meta property="og:updated_time" content="2019-05-29T16:33:13.000Z">
+<meta property="og:updated_time" content="2019-05-29T16:35:10.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="nodeMCU捣鼓笔记(从固件刷入到wifi扫描)">
 <meta name="twitter:description" content="nodeMCU捣鼓笔记  这个小东西是安卓老师送我的,然后就一直在捣鼓这个玩意儿.挺好玩的,这捣鼓的过程也学到了很多东西. 网上资料也算比较多,只是遇到很多问题,也捣鼓了很久.   首先你要有一个nodeMCU, 他是长这样的,并且我的是 ESP8266  到手之后,首先是找文档瞅瞅官方文档可以看到快速开始的三步骤  step1. 构建固件(选择你自己喜欢的模块构建) step2. 刷入固件 st">
@@ -237,8 +237,9 @@
 <p>如果你有更好的方法验证,可以自己修改下 <code>start_http.lua</code></p>
 <hr>
 <h3 id="开机自动部署"><a href="#开机自动部署" class="headerlink" title="开机自动部署"></a>开机自动部署</h3><blockquote>
-<p>如果你喜欢开机就自己设置AP和开启Web服务, 可以写一个 <code>init.lua</code>,<br>里面加上开机运行的代码比如<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">dofile</span><span class="params">(<span class="string">'wifi_set_ap.lua'</span>)</span></span></span><br><span class="line"><span class="function"><span class="title">dofile</span><span class="params">(<span class="string">'start_http.lua'</span>)</span></span></span><br></pre></td></tr></table></figure></p>
+<p>如果你喜欢开机就自己设置AP和开启Web服务, 可以写一个 <code>init.lua</code></p>
 </blockquote>
+<p>里面加上开机运行的代码比如<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">dofile</span><span class="params">(<span class="string">'wifi_set_ap.lua'</span>)</span></span></span><br><span class="line"><span class="function"><span class="title">dofile</span><span class="params">(<span class="string">'start_http.lua'</span>)</span></span></span><br></pre></td></tr></table></figure></p>
 
   </div>
 </article>
