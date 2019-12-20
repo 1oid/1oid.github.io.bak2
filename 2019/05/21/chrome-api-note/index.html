@@ -6,17 +6,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="chrome.runtime.*    通信 chrome.runtime.sendMessage(extensionId, message, options, callback); 1234chrome.runtime.sendMessage(&apos;Hello&apos;, function(response) &amp;#123;    console.log(response);    document.writ">
+    <meta name="description" content="chrome.runtime.*    通信 chrome.runtime.sendMessage(extensionId, message, options, callback); 1234chrome.runtime.sendMessage(&amp;apos;Hello&amp;apos;, function(response) &amp;#123;    console.log(response);    doc">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Chrome插件开发API笔记">
 <meta property="og:url" content="https://1oid.github.io/2019/05/21/chrome-api-note/index.html">
 <meta property="og:site_name" content="一步一世界">
-<meta property="og:description" content="chrome.runtime.*    通信 chrome.runtime.sendMessage(extensionId, message, options, callback); 1234chrome.runtime.sendMessage(&apos;Hello&apos;, function(response) &amp;#123;    console.log(response);    document.writ">
+<meta property="og:description" content="chrome.runtime.*    通信 chrome.runtime.sendMessage(extensionId, message, options, callback); 1234chrome.runtime.sendMessage(&amp;apos;Hello&amp;apos;, function(response) &amp;#123;    console.log(response);    doc">
 <meta property="og:locale" content="default">
 <meta property="og:updated_time" content="2019-05-29T16:27:58.418Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Chrome插件开发API笔记">
-<meta name="twitter:description" content="chrome.runtime.*    通信 chrome.runtime.sendMessage(extensionId, message, options, callback); 1234chrome.runtime.sendMessage(&apos;Hello&apos;, function(response) &amp;#123;    console.log(response);    document.writ">
+<meta name="twitter:description" content="chrome.runtime.*    通信 chrome.runtime.sendMessage(extensionId, message, options, callback); 1234chrome.runtime.sendMessage(&amp;apos;Hello&amp;apos;, function(response) &amp;#123;    console.log(response);    doc">
     
     
         
@@ -75,7 +75,7 @@
     <span id="actions">
       <ul>
         
-        <li><a class="icon" href="/2019/11/08/test/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        <li><a class="icon" href="/2019/12/20/JAVA-RMI-Base/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
         <li><a class="icon" href="/2019/04/23/Python-with-Rabbitmq-Basic/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
@@ -143,10 +143,10 @@
   <div class="content" itemprop="articleBody">
     <h3 id="chrome-runtime-通信"><a href="#chrome-runtime-通信" class="headerlink" title="chrome.runtime.*    通信"></a>chrome.runtime.*    通信</h3><ul>
 <li><p><code>chrome.runtime.sendMessage(extensionId, message, options, callback);</code></p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">chrome.runtime.sendMessage(<span class="string">'Hello'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">response</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(response);</span><br><span class="line">    <span class="built_in">document</span>.write(response);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">chrome.runtime.sendMessage(&apos;Hello&apos;, function(response) &#123;</span><br><span class="line">    console.log(response);</span><br><span class="line">    document.write(response);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 </li>
 <li><p><code>chrome.runtime.onMessage.addListener(callback)</code></p>
-<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">chrome.runtime.onMessage.addListener(<span class="function"><span class="keyword">function</span><span class="params">(message, sender, sendResponse)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(message == <span class="string">'Hello'</span>) &#123;</span><br><span class="line">        sendResponse(<span class="string">'I recive it...'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">chrome.runtime.onMessage.addListener(function(message, sender, sendResponse)&#123;</span><br><span class="line">    if(message == &apos;Hello&apos;) &#123;</span><br><span class="line">        sendResponse(&apos;I recive it...&apos;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <h3 id="chrome-storage-StorageArea-存储API-“permissions”声明-“storage”"><a href="#chrome-storage-StorageArea-存储API-“permissions”声明-“storage”" class="headerlink" title="chrome.storage.StorageArea.*    存储API, “permissions”声明 “storage”"></a>chrome.storage.StorageArea.*    存储API, “permissions”声明 “storage”</h3><ul>
@@ -196,7 +196,7 @@
 <li><code>*.remove</code> </li>
 </ul>
 <h3 id="chrome-browserAction-setIcon-details-callback"><a href="#chrome-browserAction-setIcon-details-callback" class="headerlink" title="chrome.browserAction.setIcon(details, callback)"></a><code>chrome.browserAction.setIcon(details, callback)</code></h3><p><code>...setIcon({path:{&#39;19&#39;: &#39;imagepth&#39;}})</code></p>
-<h3 id="chrome-browserAction-setBadge"><a href="#chrome-browserAction-setBadge" class="headerlink" title="chrome.browserAction.setBadge**"></a>chrome.browserAction.setBadge**</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">chrome</span><span class="selector-class">.browserAction</span><span class="selector-class">.setBadgeBackgroundColor</span>(&#123;<span class="attribute">color</span>: <span class="string">"green"</span>&#125;);</span><br><span class="line"><span class="selector-tag">chrome</span><span class="selector-class">.browserAction</span><span class="selector-class">.setBadgeText</span>(&#123;<span class="attribute">text</span>: <span class="string">"OK"</span>&#125;);</span><br><span class="line">注意: 要放到 <span class="selector-tag">bg</span><span class="selector-class">.js</span></span><br></pre></td></tr></table></figure>
+<h3 id="chrome-browserAction-setBadge"><a href="#chrome-browserAction-setBadge" class="headerlink" title="chrome.browserAction.setBadge**"></a>chrome.browserAction.setBadge**</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">chrome.browserAction.setBadgeBackgroundColor(&#123;color: &quot;green&quot;&#125;);</span><br><span class="line">chrome.browserAction.setBadgeText(&#123;text: &quot;OK&quot;&#125;);</span><br><span class="line">注意: 要放到 bg.js</span><br></pre></td></tr></table></figure>
 <h3 id="chrome-tabs"><a href="#chrome-tabs" class="headerlink" title="chrome.tabs.*"></a>chrome.tabs.*</h3><p><code>chrome.tabs.onCreated.addListener(function(tab) {...})</code><br><code>chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {...})</code><br><code>chrome.tabs.onMoved.addListener(function(tab, moveInfo) {...})</code><br><code>chrome.tabs.onActivated.addListener(function(activeInfo) {...})</code><br><code>chrome.tabs.onHighlighted.addListener(function(highlightInfo) {...})</code></p>
 <ul>
 <li><code>active</code> 指标签在当前窗口中正被显示</li>
@@ -212,7 +212,7 @@
 </ul>
 <ul>
 <li><p><code>options 结构</code></p>
-<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line"><span class="symbol">    url:</span> 下载文件的url</span><br><span class="line"><span class="symbol">    filename:</span> 保存的文件名,</span><br><span class="line"><span class="symbol">    conflictAction:</span> 重命名文件的处理方式,</span><br><span class="line"><span class="symbol">    saveAs:</span> 是否弹出另存为窗口,</span><br><span class="line"><span class="symbol">    method:</span> 请求方式(GET或者POST),</span><br><span class="line"><span class="symbol">    headers:</span> 自定义headers数组</span><br><span class="line"><span class="symbol">    body:</span> POST的数据</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    url: 下载文件的url</span><br><span class="line">    filename: 保存的文件名,</span><br><span class="line">    conflictAction: 重命名文件的处理方式,</span><br><span class="line">    saveAs: 是否弹出另存为窗口,</span><br><span class="line">    method: 请求方式(GET或者POST),</span><br><span class="line">    headers: 自定义headers数组</span><br><span class="line">    body: POST的数据</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p><code>conflictAction</code> 的值只能是</p>
 <ul>
